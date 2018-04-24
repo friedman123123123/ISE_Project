@@ -10,7 +10,6 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
-// vfgfg
 
 // Main that tests the classes.
 public class Main {
