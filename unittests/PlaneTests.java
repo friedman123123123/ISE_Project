@@ -25,7 +25,8 @@ public class PlaneTests {
 		Plane plane = new Plane(new Point3D(0.0, 0.0, -3.0), new Vector(0.0, 0.0, -1.0));
 		// 45 degrees to the view plane
 		Plane plane2 = new Plane(new Point3D(0.0, 0.0, -3.0), new Vector(0.0, 0.25, -1.0));
-		Plane plane3 = new Plane(new Point3D(3,3,-1), new Point3D(5.14,5.14,-1.71), new Point3D(7,0,0));// plane with rays that contained in it
+		// plane with contained rays
+		Plane plane3 = new Plane(new Point3D(3,3,-1), new Point3D(5.14,5.14,-1.71), new Point3D(7,0,0));
 		ArrayList<Point3D> intersectionPointsPlane = new ArrayList<Point3D>();
 		ArrayList<Point3D> intersectionPointsPlane2 = new ArrayList<Point3D>();
 		ArrayList<Point3D> intersectionPointsPlane3 = new ArrayList<Point3D>();
@@ -46,10 +47,14 @@ public class PlaneTests {
 		}
 		assertTrue(intersectionPointsPlane. size() == 9);
 		assertTrue(intersectionPointsPlane2.size() == 9);
+		assertTrue(intersectionPointsPlane3.size() == 0);
 		for (Point3D iPoint: intersectionPointsPlane)
 			System.out.println(iPoint);
 		System.out.println("---");
 		for (Point3D iPoint: intersectionPointsPlane2)
+			System.out.println(iPoint);
+		System.out.println("---");
+		for (Point3D iPoint: intersectionPointsPlane3)
 			System.out.println(iPoint);
 	}
 

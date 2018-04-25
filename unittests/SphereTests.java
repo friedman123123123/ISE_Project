@@ -44,13 +44,7 @@ public class SphereTests {
 				for (Point3D iPoint: rayIntersectionPoints3)
 					intersectionPointsSphere3.add(iPoint);
 			}	
-			/*assertTrue(intersectionPointsSphere. size() == 2);
-			assertTrue(intersectionPointsSphere2.size() == 9);
-			System.out.println("Intersection Points:");
-			for (Point3D iPoint: intersectionPointsSphere) {
-				assertTrue(iPoint.equals(new Point3D(0.0, 0.0, -2.0)) || iPoint.equals(new Point3D(0.0, 0.0, -4.0)));
-				System.out.println(iPoint);*/
-			}
+		}
 		assertTrue(intersectionPointsSphere. size() == 2);
 		assertTrue(intersectionPointsSphere2.size() == 9);
 		assertTrue(intersectionPointsSphere3.size() == 1);

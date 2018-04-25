@@ -70,16 +70,22 @@ public class Plane extends Geometry {
 		findIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		Point3D q0 = new Point3D(get_p());
-		Vector n = new Vector(get_normal());
+		Vector n = new Vector(get_normal());		
 		Vector d = new Vector(r.get_direction());
 		Vector v = new Vector(q0.subtract(p0));
+
+		// if the ray is contained in the plane then don't search for intersection point.
+		Vector v1 = new Vector(n.crossProduct(d));
+		if(v1.equals(new Vector(0,0,0))){
+			return findIntersections;
+		}
 		double t = n.dotProduct(v) / n.dotProduct(d);
 		d.normalize();
 		Point3D p;
-		if(t >= 0){
+		if(t > 0){
 			p = new Point3D(p0.add(d.scale(t)));
 			findIntersections.add(p);
-		}  
+		}
 		return findIntersections;
 	}
 
