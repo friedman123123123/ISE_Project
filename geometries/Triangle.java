@@ -62,7 +62,7 @@ public class Triangle extends Plane{
 		findIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		super.findIntersectionPoints(r);
-		if(findIntersections == null)
+		if(findIntersections.size() == 0)
 			return findIntersections;
 		Vector p_p0 = new Vector(findIntersections.get(findIntersections.size()-1).subtract(p0));
 		Vector v1 = new Vector(get_p1().subtract(p0));
