@@ -20,7 +20,7 @@ public class TriangleTests {
 		final int WIDTH = 3;
 		final int HEIGHT = 3;
 		Ray[][] rays = new Ray [HEIGHT][WIDTH];
-		Camera camera = new Camera(new Point3D(0.0 ,0.0 ,0.0), new Vector (0.0, 1.0, 0.0), new Vector (0.0, 0.0, -1.0));
+		Camera camera = new Camera(new Point3D(0.0 ,0.0	 ,0.0), new Vector (0.0, 1.0, 0.0), new Vector (0.0, 0.0, -1.0));
 		Triangle triangle = new Triangle(new Point3D( 0, 1, -2), new Point3D( 1, -1, -2), new Point3D(-1, -1, -2));
 		Triangle triangle2 = new Triangle(new Point3D( 0, 10, -2), new Point3D( 1, -1, -2), new Point3D(-1, -1, -2));
 		ArrayList<Point3D> intersectionPointsTriangle = new ArrayList<Point3D>();
@@ -41,10 +41,11 @@ public class TriangleTests {
 		}
 		assertTrue(intersectionPointsTriangle. size() == 1);
 		assertTrue(intersectionPointsTriangle2.size() == 2);
-		System.out.println("Intersection Points:");
+		System.out.println("Intersection Points triangle:");
 		for (Point3D iPoint: intersectionPointsTriangle)
 			System.out.println(iPoint);
 		System.out.println("--");
+		System.out.println("Intersection Points triangle2:");
 		for (Point3D iPoint: intersectionPointsTriangle2)
 			System.out.println(iPoint);
 		}

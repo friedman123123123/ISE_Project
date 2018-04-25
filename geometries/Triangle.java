@@ -14,8 +14,6 @@ public class Triangle extends Plane{
 	private Point3D _p1;
 	private Point3D _p2;
 	private Point3D _p3;
-
-	
 	/********** Constructors ***********/
 
 	public Triangle(Point3D _p1, Point3D _p2, Point3D _p3) {
