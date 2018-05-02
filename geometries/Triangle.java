@@ -48,11 +48,13 @@ public class Triangle extends Plane{
 	
 	/*************** Admin *****************/
 
-	/************** Operations ***************/
+	/************** Operations 
+	 * @throws Exception ***************/
 	
 	// Returns a ray since it's supposed to return a normal to the plain at a specific point (ray is a point and a direction - a vector).
 	@Override
 	public Ray getNormal(Point3D p) {
+		
 		// Inherits from the father.
 		return super.getNormal(p);
 	}

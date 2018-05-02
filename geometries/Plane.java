@@ -49,7 +49,8 @@ public class Plane extends Geometry {
 
 	/*************** Admin *****************/
 
-	/************** Operations ***************/
+	/************** Operations  
+	 * @throws Exception ***************/
 	
 	// Returns a ray since it's supposed to return a normal to the plain at a specific point (ray is a point and a direction - a vector).
 	@Override
@@ -59,6 +60,12 @@ public class Plane extends Geometry {
 		// Since the normal has only a head (since it starts at the origin), the calculation gave us the parallel normal vector which starts at that point, as needed.
 		 Vector n = new Vector(p.add(get_normal())); 
 		 return new Ray(p, n); */
+		
+		
+		//check if the given point is on the plane
+		/*Vector v = new Vector(p.subtract(get_p()));
+		if(v.dotProduct(get_normal()) !=0)
+			throw new Exception("The received point is not on the plane");*/
 		
 		// Since we receive a point and we already have the normal to the plain, all left to do is return the ray (the point and the direction (vector)).
 		Vector n = new Vector(get_normal());
@@ -70,15 +77,15 @@ public class Plane extends Geometry {
 		findIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		Point3D q0 = new Point3D(get_p());
-		Vector n = new Vector(get_normal());		
+		Vector n = new Vector(get_normal());
 		Vector d = new Vector(r.get_direction());
 		Vector v = new Vector(q0.subtract(p0));
 
 		// if the ray is contained in the plane then don't search for intersection point.
-		Vector v1 = new Vector(n.crossProduct(d));
-		if(v1.equals(new Vector(0,0,0))){
+		double d1 = n.dotProduct(d);
+		if(d1 == 0)
 			return findIntersections;
-		}
+		
 		double t = n.dotProduct(v) / n.dotProduct(d);
 		d.normalize();
 		Point3D p;
