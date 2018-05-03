@@ -35,6 +35,9 @@ public class Sphere extends RadialGeometry {
 	/************** Operations ***************/
 	
 	// Returns a ray since it's supposed to return a normal to the plain at a specific point (ray is a point and a direction - a vector).
+	/**
+	 *  Gets the normal of the sphere at the specific point.
+	 */
 	@Override
 	public Ray getNormal(Point3D p) {
 		/* Vector n = new Vector(p.subtract(get_center()).normalize());  // The (normalized) vector from the center of the sphere to the given point.

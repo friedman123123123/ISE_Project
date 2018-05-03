@@ -34,7 +34,9 @@ public class Cylinder extends RadialGeometry {
 
 	/************** Operations ***************/
 	
-	// Returns a ray since it's supposed to return a normal to the plain at a specific point (ray is a point and a direction - a vector).
+	/** Returns a ray since it's supposed to return a normal to the plain at a specific point (ray is a point and a direction - a vector).
+	 *  Gets the normal of the cylinder at a specific point.
+	 */
 	@Override
 	public Ray getNormal(Point3D p) {
 		// First we want to find the point on the ray of the cylinder in which the normal to the given point (of the function) goes throw.

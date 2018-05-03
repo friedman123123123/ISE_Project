@@ -1,7 +1,6 @@
 package primitives;
 
 public class Color {
-	private java.awt.Color _color;
 	private double _red;
 	private double _green;
 	private double _blue;
@@ -9,9 +8,6 @@ public class Color {
 	/********** Constructors ***********/
 	
 	/************** Getters/Setters *******/
-	public java.awt.Color get_color() {
-		return _color;
-	}
 	public double getRed() {
 		return _red;
 	}
@@ -22,6 +18,14 @@ public class Color {
 		return _blue;
 	}
 	/************** Operations ***************/
+	public Color add(Color c) {
+		
+		_red += c.getRed();
+		_green += c.getGreen();
+		_blue += c.getBlue();
+		
+	}
+	
 	public void scale(double d){
 		_red *= d;
 		_green *= d;

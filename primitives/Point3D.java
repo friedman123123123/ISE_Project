@@ -66,28 +66,39 @@ private Coordinate _z;
 	}
 	
 	/************** Helpers ***************/
-	//Calling Coordinate's subtract method to economize re-checking subtraction of coordinations.
+	/**
+	 * Calling Coordinate's subtract method to economize re-checking subtraction of coordinations.
+	 * @param p
+	 * @return
+	 */
 	private Point3D _subtract(Point3D p) {
 		Coordinate x = this.getX().subtract(p.getX());
 		Coordinate y = this.getY().subtract(p.getY());
-		Coordinate z = this.getZ().subtract(p.getZ());
+		Coordinate z = _z.subtract(p.getZ());
 		return new Point3D(x, y, z);
 	}
 	
-	//Calling Coordinate's add method to economize re-checking addition of coordinations.
+	/**
+	 * Calling Coordinate's add method to economize re-checking addition of coordinations.
+	 * @param v
+	 * @return
+	 */
 	private Point3D _add(Vector v) {
 		Coordinate x = this.getX().add(v.getHead().getX());
 		Coordinate y = this.getY().add(v.getHead().getY());
-		Coordinate z = this.getZ().add(v.getHead().getZ());
+		Coordinate z = _z.add(v.getHead().getZ());
 		return new Point3D(x, y, z);
 	}
 	
-	//Using the Math library to calculate the power and square root according to the distance equation:
-	// sqrt((x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2)
+	/**Using the Math library to calculate the power and square root according to the distance equation:
+	 * sqrt((x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2)
+	 * @param p
+	 * @return
+	 */
 	private double _distance(Point3D p) {
 		double x = Math.pow((p.getX().subtract(this.getX())).get(),2);
 		double y = Math.pow((p.getY().subtract(this.getY())).get(),2);
-		double z = Math.pow((p.getZ().subtract(this.getZ())).get(),2);
+		double z = Math.pow((p.getZ().subtract(_z)).get(),2);
 		return Math.sqrt(x + y +z);
 	}
 }

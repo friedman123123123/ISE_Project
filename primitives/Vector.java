@@ -77,67 +77,89 @@ public class Vector {
 	}
 	
 	/************** Helpers ***************/	
-	//Calling Coordinate's add method to economize re-checking addition of coordinations.
+	/**
+	 * Calling Coordinate's add method to economize re-checking addition of coordinations.
+	 * @param v
+	 * @return
+	 */
 	private Vector _add(Vector v) {
-		Coordinate x = this.getHead().getX().add(v.getHead().getX());
-		Coordinate y = this.getHead().getY().add(v.getHead().getY());
-		Coordinate z = this.getHead().getZ().add(v.getHead().getZ());
+		Coordinate x = _head.getX().add(v.getHead().getX());
+		Coordinate y = _head.getY().add(v.getHead().getY());
+		Coordinate z = _head.getZ().add(v.getHead().getZ());
 		return new Vector(x, y, z);
 	}
 	
-	//Calling Coordinate's subtract method to economize re-checking subtraction of coordinations.
+	/**
+	 * Calling Coordinate's subtract method to economize re-checking subtraction of coordinations.
+	 * @param v
+	 * @return
+	 */
 	private Vector _subtract(Vector v) {
-		Coordinate x = this.getHead().getX().subtract(v.getHead().getX());
-		Coordinate y = this.getHead().getY().subtract(v.getHead().getY());
-		Coordinate z = this.getHead().getZ().subtract(v.getHead().getZ());
+		Coordinate x = _head.getX().subtract(v.getHead().getX());
+		Coordinate y = _head.getY().subtract(v.getHead().getY());
+		Coordinate z = _head.getZ().subtract(v.getHead().getZ());
 		return new Vector(x, y, z);
 	}
 	
-	//Calling Coordinate's scale method to economize re-checking multiplication by scalar of coordinations.
+	/**
+	 * Calling Coordinate's scale method to economize re-checking multiplication by scalar of coordinations.
+	 * @param s
+	 * @return
+	 */
 	private Vector _scale(double s) {
-		Coordinate x = this.getHead().getX().scale(s);
-		Coordinate y = this.getHead().getY().scale(s);
-		Coordinate z = this.getHead().getZ().scale(s);
+		Coordinate x = _head.getX().scale(s);
+		Coordinate y = _head.getY().scale(s);
+		Coordinate z = _head.getZ().scale(s);
 		return new Vector(x, y, z);
 	}
 	
 	
-	//Calling Coordinate's multiply method to economize re-checking multiplication of coordinations.
-	//Using the linear equation to calculate dot product:
-	//u * v = u1*v1 + u2*v2 + u3*v3
+	/**Calling Coordinate's multiply method to economize re-checking multiplication of coordinations.
+	 * Using the linear equation to calculate dot product:
+	 * u * v = u1*v1 + u2*v2 + u3*v3
+	 * @param v
+	 * @return
+	 */
 	private double _dotProduct(Vector v) {
-		Coordinate x = this.getHead().getX().multiply(v.getHead().getX());
-		Coordinate y = this.getHead().getY().multiply(v.getHead().getY());
-		Coordinate z = this.getHead().getZ().multiply(v.getHead().getZ());
+		Coordinate x = _head.getX().multiply(v.getHead().getX());
+		Coordinate y = _head.getY().multiply(v.getHead().getY());
+		Coordinate z = _head.getZ().multiply(v.getHead().getZ());
 		return x.get() + y.get() + z.get();
 	}
 	
-	//Calling Coordinate's multiply and subtract methods to economize re-checking multiplication and subtraction of coordinations.
-	//Using the linear equation to calculate cross product:
-	//u x v = (u2*v3 - u3*v2, u3*v1 - u1*v3, u1*v2 - u2*v1)
+	/**Calling Coordinate's multiply and subtract methods to economize re-checking multiplication and subtraction of coordinations.
+	 * Using the linear equation to calculate cross product:
+	 * u x v = (u2*v3 - u3*v2, u3*v1 - u1*v3, u1*v2 - u2*v1)
+	 * @param v
+	 * @return
+	 */
 	private Vector _crossProduct(Vector v) {
-		Coordinate x = (this.getHead().getY().multiply(v.getHead().getZ())).subtract(this.getHead().getZ().multiply(v.getHead().getY()));
-		Coordinate y = (this.getHead().getZ().multiply(v.getHead().getX())).subtract(this.getHead().getX().multiply(v.getHead().getZ()));
-		Coordinate z = (this.getHead().getX().multiply(v.getHead().getY())).subtract(this.getHead().getY().multiply(v.getHead().getX()));
+		Coordinate x = (_head.getY().multiply(v.getHead().getZ())).subtract(_head.getZ().multiply(v.getHead().getY()));
+		Coordinate y = (_head.getZ().multiply(v.getHead().getX())).subtract(_head.getX().multiply(v.getHead().getZ()));
+		Coordinate z = (_head.getX().multiply(v.getHead().getY())).subtract(_head.getY().multiply(v.getHead().getX()));
 		return new Vector(x, y, z);
 	}
 	
-	//The length of a vector v, ||v||, is the equation:
-	// sqrt((x)^2 + (y)^2 + (z)^2)
-	// since every vector starts from the origin (0, 0, 0).
-	//(Elsewhere, it would have used the normal distance equation, as shown in class Point3D.)
+	/**The length of a vector v, ||v||, is the equation:
+	 * sqrt((x)^2 + (y)^2 + (z)^2)
+	 *  since every vector starts from the origin (0, 0, 0).
+	 * (Elsewhere, it would have used the normal distance equation, as shown in class Point3D.)
+	 * @return
+	 */
 	private double _length() {
-		return Math.sqrt(Math.pow(this.getHead().getX().get(),2) + Math.pow(this.getHead().getY().get(),2) + Math.pow(this.getHead().getZ().get(),2));
+		return Math.sqrt(Math.pow(_head.getX().get(),2) + Math.pow(_head.getY().get(),2) + Math.pow(_head.getZ().get(),2));
 	}
 	
-	//The normalization of a vector v, is the vector itself divided by its length, as in the equation:
-	//nor(v) = v / ||v||
+	/**The normalization of a vector v, is the vector itself divided by its length, as in the equation:
+	 * nor(v) = v / ||v||
+	 * @return
+	 */
 	private Vector _normalize() {
 		double l = this.length();
 		if (l == 0) throw new ArithmeticException("divide by zero"); // Throws exception if divided by zero.
-		Coordinate x = new Coordinate((this.getHead().getX().get())/(l));
-		Coordinate y = new Coordinate((this.getHead().getY().get())/(l));
-		Coordinate z = new Coordinate((this.getHead().getZ().get())/(l));
+		Coordinate x = new Coordinate((_head.getX().get())/(l));
+		Coordinate y = new Coordinate((_head.getY().get())/(l));
+		Coordinate z = new Coordinate((_head.getZ().get())/(l));
 		return new Vector(x, y, z);
 	}
 
