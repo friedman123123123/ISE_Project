@@ -70,7 +70,7 @@ public class ImageWriter {
 		_image.setRGB(xIndex, yIndex, rgb);
 	}
 	
-	public void writePixel(int xIndex, int yIndex, int[] rgbArray){
+	public void writePixel(int 	xIndex, int yIndex, int[] rgbArray){
 		int rgb = new Color(rgbArray[0], rgbArray[1], rgbArray[2]).getRGB();
 		_image.setRGB(xIndex, yIndex, rgb);
 	}

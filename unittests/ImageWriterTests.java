@@ -8,7 +8,7 @@ public class ImageWriterTests {
 
 	@Test
 	public void writeImageTest() {
-		fail("Not yet implemented");
+		
 	}
 
 }
