@@ -1,13 +1,13 @@
 package geometries;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import primitives.Point3D;
 import primitives.Ray;
 
 public class Geometries extends Geometry{
 	
-	private ArrayList<Geometry> geometriesList = new ArrayList<Geometry>();
+	private List<Geometry> geometriesList = new ArrayList<Geometry>();
 	
 	/************** Operations ***************/
 	
@@ -25,9 +25,9 @@ public class Geometries extends Geometry{
 	}
 
 	@Override
-	public ArrayList<Point3D> findIntersectionPoints(Ray r){
+	public List<Point3D> findIntersectionPoints(Ray r){
 		findIntersections = new ArrayList<Point3D>();
-		ArrayList<Point3D> intersections = new ArrayList<Point3D>();
+		List<Point3D> intersections = new ArrayList<Point3D>();
 		for(Geometry g: geometriesList){
 			intersections = g.findIntersectionPoints(r);
 			for(Point3D p: intersections)
@@ -36,5 +36,4 @@ public class Geometries extends Geometry{
 		return findIntersections;
 	}
 	
-
 }

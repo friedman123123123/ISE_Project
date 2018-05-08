@@ -2,7 +2,7 @@ package unittests;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -27,16 +27,16 @@ public class PlaneTests {
 		Plane plane2 = new Plane(new Point3D(0.0, 0.0, -3.0), new Vector(0.0, 0.25, -1.0));
 		// plane with contained rays
 		Plane plane3 = new Plane(new Point3D(3,3,-1), new Point3D(5.14,5.14,-1.71), new Point3D(7,0,0));
-		ArrayList<Point3D> intersectionPointsPlane = new ArrayList<Point3D>();
-		ArrayList<Point3D> intersectionPointsPlane2 = new ArrayList<Point3D>();
-		ArrayList<Point3D> intersectionPointsPlane3 = new ArrayList<Point3D>();
+		List<Point3D> intersectionPointsPlane = new ArrayList<Point3D>();
+		List<Point3D> intersectionPointsPlane2 = new ArrayList<Point3D>();
+		List<Point3D> intersectionPointsPlane3 = new ArrayList<Point3D>();
 		System.out.println("Camera:\n" + camera);
 		for (int i = 0; i < HEIGHT; i++){
 			for (int j = 0; j < WIDTH; j++){
 				rays[i][j] = camera.constructRayThroughPixel(WIDTH, HEIGHT, j, i, 1, 3 * WIDTH, 3 * HEIGHT);
-				ArrayList<Point3D> rayIntersectionPoints = plane.findIntersectionPoints(rays[i][j]);
-				ArrayList<Point3D> rayIntersectionPoints2 = plane2.findIntersectionPoints(rays[i][j]);
-				ArrayList<Point3D> rayIntersectionPoints3 = plane3.findIntersectionPoints(rays[i][j]);
+				List<Point3D> rayIntersectionPoints = plane.findIntersectionPoints(rays[i][j]);
+				List<Point3D> rayIntersectionPoints2 = plane2.findIntersectionPoints(rays[i][j]);
+				List<Point3D> rayIntersectionPoints3 = plane3.findIntersectionPoints(rays[i][j]);
 				for (Point3D iPoint: rayIntersectionPoints)
 					intersectionPointsPlane.add(iPoint);
 				for (Point3D iPoint: rayIntersectionPoints2)

@@ -64,6 +64,12 @@ private Coordinate _z;
 	public double distance(Point3D p) {
 		return _distance(p);
 	}
+	public double distanceSqrt(Point3D p) {
+		double x = (p.getX().subtract(this.getX())).get() * (p.getX().subtract(this.getX())).get();
+		double y = (p.getY().subtract(this.getY())).get()*(p.getY().subtract(this.getY())).get();
+		double z = ((p.getZ().subtract(_z)).get())*((p.getZ().subtract(_z)).get());
+		return (x + y +z);
+	}
 	
 	/************** Helpers ***************/
 	/**

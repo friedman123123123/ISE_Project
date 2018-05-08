@@ -2,7 +2,7 @@ package unittests;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -27,20 +27,20 @@ public class TriangleTests {
 		Triangle triangle3 = new Triangle(new Point3D(3, -3, -1), new Point3D( 2.93, -2.58, -2), new Point3D(5.89, -4.34, 0));
 		// Triangle that a ray intersects in the edge
 		Triangle triangle4 = new Triangle(new Point3D(-0.84, -6.78, -2.41), new Point3D(1.2, -9.18, -2.85), new Point3D(1.38, -4.62, -2));
-		ArrayList<Point3D> intersectionPointsTriangle = new ArrayList<Point3D>();
-		ArrayList<Point3D> intersectionPointsTriangle2 = new ArrayList<Point3D>();
-		ArrayList<Point3D> intersectionPointsTriangle3 = new ArrayList<Point3D>();
-		ArrayList<Point3D> intersectionPointsTriangle4 = new ArrayList<Point3D>();
+		List<Point3D> intersectionPointsTriangle = new ArrayList<Point3D>();
+		List<Point3D> intersectionPointsTriangle2 = new ArrayList<Point3D>();
+		List<Point3D> intersectionPointsTriangle3 = new ArrayList<Point3D>();
+		List<Point3D> intersectionPointsTriangle4 = new ArrayList<Point3D>();
 		System.out.println("Camera:\n" + camera);
 		for (int i = 0; i < HEIGHT; i++)
 		{
 			for (int j = 0; j < WIDTH; j++)
 			{
 				rays[i][j] = camera.constructRayThroughPixel(WIDTH, HEIGHT, j, i, 1, 3 * WIDTH, 3 * HEIGHT);
-				ArrayList<Point3D> rayIntersectionPoints = triangle.findIntersectionPoints(rays[i][j]);
-				ArrayList<Point3D> rayIntersectionPoints2 = triangle2.findIntersectionPoints(rays[i][j]);
-				ArrayList<Point3D> rayIntersectionPoints3 = triangle3.findIntersectionPoints(rays[i][j]);
-				ArrayList<Point3D> rayIntersectionPoints4 = triangle4.findIntersectionPoints(rays[i][j]);
+				List<Point3D> rayIntersectionPoints = triangle.findIntersectionPoints(rays[i][j]);
+				List<Point3D> rayIntersectionPoints2 = triangle2.findIntersectionPoints(rays[i][j]);
+				List<Point3D> rayIntersectionPoints3 = triangle3.findIntersectionPoints(rays[i][j]);
+				List<Point3D> rayIntersectionPoints4 = triangle4.findIntersectionPoints(rays[i][j]);
 				for (Point3D iPoint: rayIntersectionPoints)
 					intersectionPointsTriangle.add(iPoint);
 				for (Point3D iPoint: rayIntersectionPoints2)

@@ -1,7 +1,6 @@
 package geometries;
 
-import java.awt.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import primitives.Point3D;
 import primitives.Ray;
@@ -76,7 +75,7 @@ public class Plane extends Geometry {
 	}
 
 	@Override
-	public ArrayList<Point3D> findIntersectionPoints(Ray r) {
+	public List<Point3D> findIntersectionPoints(Ray r) {
 		findIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		Point3D q0 = new Point3D(get_p());

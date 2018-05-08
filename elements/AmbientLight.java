@@ -14,6 +14,10 @@ public class AmbientLight {
 	
 	
 	/********** Constructors ***********/
+	public AmbientLight() {
+		_color = new Color(255, 255, 255);
+		Ka = 1;
+	}
 	
 	/************** Getters/Setters *******/
 	

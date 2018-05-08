@@ -1,6 +1,6 @@
 package geometries;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import primitives.Point3D;
 import primitives.Ray;
@@ -52,7 +52,7 @@ public class Sphere extends RadialGeometry {
 	}
 	
 	@Override
-	public ArrayList<Point3D> findIntersectionPoints(Ray r){
+	public List<Point3D> findIntersectionPoints(Ray r){
 		findIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		Vector u = new Vector(get_center().subtract(p0));

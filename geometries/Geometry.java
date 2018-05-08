@@ -1,7 +1,6 @@
 package geometries;
 
-import java.awt.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import primitives.Point3D;
 import primitives.Ray;
@@ -43,5 +42,5 @@ public abstract class Geometry {
 	 */
 	public abstract Ray getNormal(Point3D p);
 	
-	public abstract ArrayList<Point3D> findIntersectionPoints(Ray r);
+	public abstract List<Point3D> findIntersectionPoints(Ray r);
 }
