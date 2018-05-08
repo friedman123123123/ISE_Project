@@ -25,8 +25,15 @@ public class Geometries extends Geometry{
 	}
 
 	@Override
-	public ArrayList<Point3D> findIntersectionPoints(Ray r) {
-		return null;
+	public ArrayList<Point3D> findIntersectionPoints(Ray r){
+		findIntersections = new ArrayList<Point3D>();
+		ArrayList<Point3D> intersections = new ArrayList<Point3D>();
+		for(Geometry g: geometriesList){
+			intersections = g.findIntersectionPoints(r);
+			for(Point3D p: intersections)
+				findIntersections.add(p);
+		}
+		return findIntersections;
 	}
 	
 

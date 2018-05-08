@@ -1,6 +1,8 @@
 package elements;
 
-import java.awt.Color;
+
+import primitives.Color;
+import primitives.Point3D;
 
 /**
  * @author Daniel & Yonathan
@@ -29,5 +31,10 @@ public class AmbientLight {
 	}
 	
 	/************** Operations ***************/
-
+	public Color getIntensity() {
+		//Color I;
+		Color ambientLight = _color.scale(Ka);
+		//I = ambientLight;
+		return ambientLight;
+	}
 }

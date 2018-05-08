@@ -66,8 +66,8 @@ public class Camera {
 		//double x = (i + 0.5)*Rx;
 		double y = (j - Ny/2.0 + 0.5)*Ry;
 		double x = (i - Nx/2.0 + 0.5)*Rx;
-		Point3D _p = new Point3D((pC.add(get_vRight().scale(((x-Nx/2.0)*Rx)+Rx/2.0))));
-		Point3D p1 = new Point3D(_p.add((get_vUp().scale( - (((y-Ny/2)*screenHeight/Ny)+screenHeight/2.0*Ny)))));  
+		//Point3D _p = new Point3D((pC.add(get_vRight().scale(((x-Nx/2.0)*Rx)+Rx/2.0))));
+		//Point3D p1 = new Point3D(_p.add((get_vUp().scale( - (((y-Ny/2)*screenHeight/Ny)+screenHeight/2.0*Ny)))));  
 		//Point3D p = new Point3D((pC.add(get_vRight().scale(Rx*(x + 0.5 - Nx/2.0)).add((get_vUp().scale(-Ry*(y+0.5-Ny/2.0)))))));
 		Point3D p = new Point3D((pC.add(get_vRight().scale(x).add((get_vUp().scale(-y))))));
 		
