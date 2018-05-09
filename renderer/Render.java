@@ -66,9 +66,9 @@ public class Render {
 				else {
 					//System.out.println(intersectionsPoints);
 					Point3D closestPoint = getClosestPoint(intersectionsPoints);
-					// System.out.println(closestPoint);
-					// System.out.println("(" + i + "," + j + ")");
-					// System.exit(0);
+					//System.out.println(closestPoint);
+					//System.out.println("(" + i + "," + j + ")");
+					//System.exit(0);
 					_imageWriter.writePixel(i, j, calcColor(closestPoint).getColor());
 					// _imageWriter.writePixel(i, j, 255,255,255);
 				}
@@ -80,7 +80,6 @@ public class Render {
 
 	private Color calcColor(Point3D p) {
 		return _scene.get_ambientLight().getIntensity();
-
 	}
 
 	private Point3D getClosestPoint(List<Point3D> points) {

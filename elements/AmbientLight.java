@@ -1,6 +1,5 @@
 package elements;
 
-
 import primitives.Color;
 import primitives.Point3D;
 
@@ -9,36 +8,46 @@ import primitives.Point3D;
  *
  */
 public class AmbientLight {
-	Color _color;
-	double Ka;
-	
-	
+	private Color _color;
+	private double _Ka;
+	private Color _intensity;
+
 	/********** Constructors ***********/
 	public AmbientLight() {
 		_color = new Color(255, 255, 255);
-		Ka = 1;
+		_Ka = 1;
+		_intensity = new Color(_color).scale(_Ka);
 	}
-	
+
+	public AmbientLight(Color color, double ka) {
+		_color = color;
+		_Ka = ka;
+		_intensity = new Color(_color).scale(_Ka);
+	}
+
 	/************** Getters/Setters *******/
-	
+
 	public Color get_color() {
 		return _color;
 	}
+
 	public double getKa() {
-		return Ka;
+		return _Ka;
 	}
+
 	public void set_color(Color _color) {
 		this._color = _color;
 	}
+
 	public void setKa(double ka) {
-		Ka = ka;
+		_Ka = ka;
 	}
-	
-	/************** Operations ***************/
-	public Color getIntensity() {
-		//Color I;
-		Color ambientLight = _color.scale(Ka);
-		//I = ambientLight;
-		return ambientLight;
+
+	/**
+	 * @return final ambient light after multiply by _Ka
+	 */
+	public Color getIntensity()
+	{
+		return _intensity;
 	}
 }
