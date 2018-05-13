@@ -16,7 +16,7 @@ public class TriangleTests {
 
 	/*** Triangle test  ***/
 	@Test
-	public void TriangleIntersectionPointsTest() throws Exception{
+	public void TriangleIntersectionPointsTest(){
 		final int WIDTH = 3;
 		final int HEIGHT = 3;
 		Ray[][] rays = new Ray [HEIGHT][WIDTH];

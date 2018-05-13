@@ -33,19 +33,6 @@ public class Color {
 		_blue = color.getBlue();
 	}
 
-	/************** Getters/Setters *******/
-	public double getRed() {
-		return _red;
-	}
-
-	public double getGreen() {
-		return _green;
-	}
-
-	public double getBlue() {
-		return _blue;
-	}
-
 	/**
 	 * Getter for the color - produces final java.awt.Color
 	 * 
@@ -102,8 +89,9 @@ public class Color {
 	}
 
 	/**
-	 * @param d the value we want to scale our color
-	 * @return a color that its intensity is scaled by d
+	 * Updates the color by scaling its intensity by d
+	 * @param double - scaling coefficient
+	 * @return Color
 	 */
 	public Color scale(double d) {
 		if (d < 1)

@@ -13,11 +13,11 @@ public class Camera {
 	private Vector _vRight;
 	
 	/********** Constructors ***********/
-	public Camera(Point3D p, Vector vUp, Vector vTo) throws Exception {
+	public Camera(Point3D p, Vector vUp, Vector vTo){
 		Vector vRight;
 		
 		if(vUp.dotProduct(vTo) != 0)
-			throw new Exception("non-orthogonal");
+			throw new IllegalArgumentException("non-orthogonal");
 		else 
 			vRight = new Vector(vUp.crossProduct(vTo));
 		
@@ -57,7 +57,7 @@ public class Camera {
 	
 	public Ray constructRayThroughPixel(int Nx, int Ny, int i, int j, double screenDistance, double	screenWidth, double	screenHeight)
 	{
-		Point3D pC = new Point3D(get_p0().add(get_vTo().scale(screenDistance)));
+		Point3D pC = get_p0().add(get_vTo().scale(screenDistance));
 		// Point3D p1 = new Point3D(pC).add(get_vUp().scale(0.5*screenHeight));
 		// Point3D p2 = new Point3D(pC).add(get_vUp().scale(-0.5*screenHeight));
 		double Rx = screenWidth / Nx;
@@ -66,14 +66,14 @@ public class Camera {
 		//double x = (i + 0.5)*Rx;
 		double y = (j - Ny/2.0 + 0.5)*Ry;
 		double x = (i - Nx/2.0 + 0.5)*Rx;
-		//Point3D _p = new Point3D((pC.add(get_vRight().scale(((x-Nx/2.0)*Rx)+Rx/2.0))));
-		//Point3D p1 = new Point3D(_p.add((get_vUp().scale( - (((y-Ny/2)*screenHeight/Ny)+screenHeight/2.0*Ny)))));  
-		//Point3D p = new Point3D((pC.add(get_vRight().scale(Rx*(x + 0.5 - Nx/2.0)).add((get_vUp().scale(-Ry*(y+0.5-Ny/2.0)))))));
-		Point3D p = new Point3D((pC.add(get_vRight().scale(x).add((get_vUp().scale(-y))))));
+
+		Point3D p = pC;
+		if (x != 0.0)
+			p = p.add(get_vRight().scale(x));
+		if (y != 0.0)
+			p = p.add(get_vUp().scale(-y));
 		
-		Vector _v = new Vector(p.subtract(get_p0()));
-		Vector v = new Vector(_v.normalize());
-		return new Ray(p, v); 
+		return new Ray(_p0, p.subtract(get_p0())); 
 	}
 	
 }

@@ -30,6 +30,11 @@ public class Coordinate {
 		public boolean equals(Object obj) {
 			if (this == obj) return true;
 			if (obj == null) return false;
+			
+			// ... if (Coordinate.ZERO.equals(some_number)) ...
+			if (obj instanceof Double)
+				return _subtract((double)obj) == 0.0;
+			
 			if (!(obj instanceof Coordinate)) return false;
 			
 			Coordinate other = (Coordinate) obj;

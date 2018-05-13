@@ -10,14 +10,14 @@ public abstract class RadialGeometry extends Geometry {
 
 	/********** Constructors ***********/
 
-	public RadialGeometry(double _radius) {
+	public RadialGeometry(double radius) {
 		super();
-		this._radius = _radius;
+		_radius = radius;
 	}
 	
 	// Copy constructor
-	public RadialGeometry(RadialGeometry r) {
-		this._radius = r._radius;
+	public RadialGeometry(RadialGeometry other) {
+		_radius = other._radius;
 	}
 
 	/************** Getters/Setters *******/

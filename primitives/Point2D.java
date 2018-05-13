@@ -5,8 +5,8 @@ package primitives;
  *
  */
 public class Point2D {
-	private Coordinate _x;
-	private Coordinate _y;
+	protected Coordinate _x;
+	protected Coordinate _y;
 	
 	/********** Constructors ***********/
 	public Point2D(Coordinate x, Coordinate y) {

@@ -14,15 +14,15 @@ public class Cylinder extends RadialGeometry {
 	
 	public Cylinder(double _radius, Ray _axisRay) {
 		super(_radius);
-		this._axisRay = new Ray(_axisRay);
+		_axisRay = new Ray(_axisRay);
 	}
 
 	// Copy constructor
 	// The copy constructor gets two parameters, sends one to its predecessor and the other one is copied to the class' parameters.
 	// The parameter r (which stands for the radius) is sent to the predecessor's copy constructor since the radius exists in the predecessor class and not in this class.
-	public Cylinder(RadialGeometry r, Cylinder c) {
-		super(r);
-		this._axisRay = c.get_axisRay();
+	public Cylinder(Cylinder other) {
+		super(other);
+		_axisRay = new Ray(other._axisRay);
 	}
 	
 	/************** Getters/Setters *******/	

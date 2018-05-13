@@ -10,18 +10,20 @@ public class Vector {
 	/********** Constructors ***********/
 	public Vector(Coordinate x, Coordinate y, Coordinate z) {
 		_head = new Point3D(x, y, z);
+		if (Point3D.ZERO.equals(_head))
+			throw new IllegalArgumentException("asdasdfsdf ");
 	}
 	
 	public Vector(double x, double y, double z) {
 		_head = new Point3D(x, y, z);
 	}
 	
-	public Vector(Point3D other) {
-		_head = new Point3D(other);
+	public Vector(Point3D p) {
+		_head = new Point3D(p);
 	}
 	
 	public Vector(Vector other) {
-		_head = other._head;
+		_head = new Point3D(other._head);
 	}
 
 	/************** Getters/Setters *******/
@@ -70,10 +72,6 @@ public class Vector {
 	
 	public double length() {
 		return _length();
-	}
-	
-	public Vector normalize() {
-		return new Vector(_normalize());
 	}
 	
 	/************** Helpers ***************/	
@@ -147,20 +145,20 @@ public class Vector {
 	 * @return
 	 */
 	private double _length() {
-		return Math.sqrt(Math.pow(_head.getX().get(),2) + Math.pow(_head.getY().get(),2) + Math.pow(_head.getZ().get(),2));
+		return Math.sqrt(this.dotProduct(this));
 	}
 	
 	/**The normalization of a vector v, is the vector itself divided by its length, as in the equation:
 	 * nor(v) = v / ||v||
 	 * @return
 	 */
-	private Vector _normalize() {
+	public Vector normalize() {
 		double l = this.length();
-		if (l == 0) throw new ArithmeticException("divide by zero"); // Throws exception if divided by zero.
-		Coordinate x = new Coordinate((_head.getX().get())/(l));
-		Coordinate y = new Coordinate((_head.getY().get())/(l));
-		Coordinate z = new Coordinate((_head.getZ().get())/(l));
-		return new Vector(x, y, z);
+		double x = _head.getX().get()/l;
+		double y = _head.getY().get()/l;
+		double z = _head.getZ().get()/l;
+		_head = new Point3D(x, y, z);
+		return this;
 	}
 
 }

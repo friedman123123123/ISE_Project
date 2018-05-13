@@ -12,7 +12,7 @@ import primitives.Vector;
  */
 public abstract class Geometry {
 	
-	ArrayList<Point3D> findIntersections;
+	List<Point3D> findIntersections;
 	
 	/********** Constructors ***********/
 	// Default constructor and copy constructor that does nothing (for now).

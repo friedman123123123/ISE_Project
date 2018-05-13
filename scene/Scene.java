@@ -18,12 +18,8 @@ public class Scene {
 	private AmbientLight _ambientLight;
 	
 	/********** Constructors ***********/
-	public Scene(String name) throws Exception {
+	public Scene(String name) {
 		_name = name;
-		_camera =  new Camera(new Point3D(0.0 ,0.0 ,0.0), new Vector (0.0, 1.0, 0.0), new Vector (0.0, 0.0, -1.0));
-		_distance = 1;
-		_geometries = new Geometries();
-		_ambientLight = new AmbientLight();
 	}
 
 	/************** Getters/Setters *******/

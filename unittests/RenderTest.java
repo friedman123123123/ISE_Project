@@ -7,6 +7,7 @@ import java.util.prefs.BackingStoreException;
 
 import org.junit.Test;
 
+import elements.AmbientLight;
 import elements.Camera;
 import geometries.Geometries;
 import geometries.Sphere;
@@ -25,7 +26,7 @@ import scene.Scene;
 public class RenderTest {
 
 	@Test
-	public void basicRendering() throws Exception{
+	public void basicRendering(){
 		
 		Date date = new Date();
 		
@@ -35,6 +36,7 @@ public class RenderTest {
 		scene.set_background(new Color(0, 0, 0));
 		Geometries geometries = new Geometries();
 		scene.set_geometries(geometries);
+		scene.set_ambientLight(new AmbientLight());
 		geometries.add(new Sphere(50, new Point3D(0, 0, 150)));
 		
 		geometries.add(new Triangle(new Point3D( 100, 0, 149), new Point3D( 0, 100, 149), new Point3D( 100, 100, 149)));

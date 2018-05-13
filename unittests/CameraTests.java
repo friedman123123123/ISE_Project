@@ -23,7 +23,7 @@ public class CameraTests {
 	
 	// Odd screen size.
 	@Test
-	public void test1RaysConstruction() throws Exception{
+	public void test1RaysConstruction(){
 		final int WIDTH = 3;
 		final int HEIGHT = 3;
 		Point3D[][] screen = new Point3D [HEIGHT][WIDTH];
@@ -57,7 +57,7 @@ public class CameraTests {
 	
 	// Even screen size.	
 	@Test
-	public void test2RaysConstruction() throws Exception{
+	public void test2RaysConstruction(){
 		final int WIDTH = 3;
 		final int HEIGHT = 3;
 		Point3D[][] screen = new Point3D [HEIGHT + 1][WIDTH + 1];

@@ -18,18 +18,18 @@ public class Triangle extends Plane{
 
 	public Triangle(Point3D _p1, Point3D _p2, Point3D _p3) {
 		super(_p1, _p2, _p3);
-		this._p1 = new Point3D(_p1);
-		this._p2 = new Point3D(_p2);
-		this._p3 = new Point3D(_p3);
+		_p1 = new Point3D(_p1);
+		_p2 = new Point3D(_p2);
+		_p3 = new Point3D(_p3);
 	}
 	 
 	// Copy constructor
 	// The copy constructor gets three parameters, sends two to its predecessor and the other one is copied to the class' parameters.
-	public Triangle(Geometry g, Plane p, Triangle t) {
-		super(g, p);
-		this._p1 = t.get_p1();
-		this._p2 = t.get_p2();
-		this._p3 = t.get_p3();
+	public Triangle(Triangle other) {
+		super(other);
+		_p1 = new Point3D(other._p1);
+		_p2 = new Point3D(other._p2);
+		_p3 = new Point3D(other._p3);
 	}
 
 	/************** Getters/Setters *******/
@@ -50,37 +50,26 @@ public class Triangle extends Plane{
 
 	/************** Operations 
 	 * @throws Exception ***************/
-	
-	// Returns a ray since it's supposed to return a normal to the plain at a specific point (ray is a point and a direction - a vector).
-	/**
-	 * Gets the normal of the triangle at the specific point.
-	 */
-	@Override
-	public Ray getNormal(Point3D p) {
 		
-		// Inherits from the father.
-		return super.getNormal(p);
-	}
-	
 	@Override
 	public List<Point3D> findIntersectionPoints(Ray r){
 		findIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		super.findIntersectionPoints(r);
-		if(findIntersections.size() == 0)
+		if(findIntersections.isEmpty())
 			return findIntersections;
 		Vector p_p0 = new Vector(findIntersections.get(findIntersections.size()-1).subtract(p0));
 		Vector v1 = new Vector(get_p1().subtract(p0));
 		Vector v2 = new Vector(get_p2().subtract(p0));
 		Vector v3 = new Vector(get_p3().subtract(p0));
-		Vector n1 = new Vector((v1.crossProduct(v2)).normalize());
+		Vector n1 = new Vector(v1.crossProduct(v2));
 		double s1 = p_p0.dotProduct(n1);
-		Vector n2 = new Vector((v2.crossProduct(v3)).normalize());
+		Vector n2 = new Vector(v2.crossProduct(v3));
 		double s2 = p_p0.dotProduct(n2);
-		Vector n3 = new Vector((v3.crossProduct(v1)).normalize());
+		Vector n3 = new Vector(v3.crossProduct(v1));
 		double s3 = p_p0.dotProduct(n3);
 		if(!((s1<0 && s2<0 && s3<0) || (s1>0 && s2>0 && s3>0))){
-			findIntersections.remove(findIntersections.size()-1);
+			findIntersections.clear();
 		}
 		return findIntersections;
 	}

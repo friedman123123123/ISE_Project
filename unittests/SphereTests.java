@@ -16,7 +16,7 @@ public class SphereTests {
 
 	/**** Sphere test ***/
 	@Test
-	public void testIntersectionPoints() throws Exception{
+	public void testIntersectionPoints(){
 		final int WIDTH = 3;
 		final int HEIGHT = 3;
 		Ray[][] rays = new Ray [HEIGHT][WIDTH];

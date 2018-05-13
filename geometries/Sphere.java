@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.*;
 
+import primitives.Coordinate;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -13,15 +14,15 @@ public class Sphere extends RadialGeometry {
 
 	public Sphere(double _radius, Point3D _center) {
 		super(_radius);
-		this._center = new Point3D(_center);
+		_center = new Point3D(_center);
 	}
 
 	// Copy constructor
 	// The copy constructor gets two parameters, sends one to its predecessor and the other one is copied to the class' parameters.	
 	// The parameter r (which stands for the radius) is sent to the predecessor's copy constructor since the radius exists in the predecessor class and not in this class.
-	public Sphere(RadialGeometry r, Sphere s) {
-		super(r);
-		this._center = s.get_center();
+	public Sphere(Sphere other) {
+		super(other);
+		_center = new Point3D(other._center);
 	}
 	
 	/************** Getters/Setters *******/	
@@ -61,12 +62,12 @@ public class Sphere extends RadialGeometry {
 		double d = Math.sqrt(u.dotProduct(u) - Math.pow(tm, 2));
 		if (d > get_radius())
 			return findIntersections;
-		if (d == get_radius()) {
+		double th = Math.sqrt(Math.pow(get_radius(), 2) - Math.pow(d, 2));
+		if (Coordinate.ZERO.equals(th)) {
 			Point3D p = p0.add(v.scale(tm));
 			findIntersections.add(p);
 			return findIntersections;
 		}
-		double th = Math.sqrt(Math.pow(get_radius(), 2) - Math.pow(d, 2));
 		double t1 = tm - th;
 		double t2 = tm + th;
 		if (t1 >= 0) {

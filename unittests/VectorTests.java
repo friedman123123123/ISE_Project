@@ -81,10 +81,9 @@ public class VectorTests {
 		
 		
 		// Checks if throws exception in divided by zero (when trying to normalize when the length of the vector is zero).
-		Vector v4 = new Vector(0,0,0);
 		
 		try {
-			v4.normalize();
+			Vector v4 = new Vector(0,0,0);
 			fail("Didn't throw divide by zero exception!");// if we threw exception, we not reach that line, and if we reach that line we have a problem
 		} 
 		catch (ArithmeticException e) {

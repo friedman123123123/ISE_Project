@@ -13,36 +13,36 @@ public class Ray {
 	
 	public Ray(double x1, double y1, double z1, double x2, double y2, double z2) {
 		_p00 = new Point3D(x1,y1,z1);
-		_direction = new Vector(x2,y2,z2);
+		_direction = new Vector(x2,y2,z2).normalize();
 	}
 	
 	public Ray(double x, double y, double z, Vector v) {
 		_p00 = new Point3D(x,y,z);
-		_direction = new Vector(v);
+		_direction = new Vector(v).normalize();
 	}
 	
 	public Ray(double x, double y, double z, Point3D p) {
 		_p00 = new Point3D(x,y,z);
-		_direction = new Vector(p);
+		_direction = new Vector(p).normalize();
 	}
 	
 	public Ray(Point3D p, double x, double y, double z) {
 		_p00 = new Point3D(p);
-		_direction = new Vector(x,y,z);
+		_direction = new Vector(x,y,z).normalize();
 	}
 	
 	public Ray(Point3D p, Vector v) {
 		_p00 = new Point3D(p);
-		_direction = new Vector(v);
+		_direction = new Vector(v).normalize();
 	}
 	
 	public Ray(Point3D p1, Point3D p2) {
 		_p00 = new Point3D(p1);
-		_direction = new Vector(p2);
+		_direction = new Vector(p2).normalize();
 	}
 	public Ray(Ray other) {
-		_p00 = other._p00;
-		_direction = other._direction;
+		_p00 = new Point3D(other._p00);
+		_direction = new Vector(other._direction);
 	}
 
 	/************** Getters/Setters *******/
