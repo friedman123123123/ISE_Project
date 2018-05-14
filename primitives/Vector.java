@@ -9,19 +9,30 @@ public class Vector {
 	
 	/********** Constructors ***********/
 	public Vector(Coordinate x, Coordinate y, Coordinate z) {
-		_head = new Point3D(x, y, z);
-		if (Point3D.ZERO.equals(_head))
+		Point3D h = new Point3D(x, y, z);
+		if (Point3D.ZERO.equals(h))
 			throw new IllegalArgumentException("asdasdfsdf ");
+		_head = h;
 	}
 	
 	public Vector(double x, double y, double z) {
-		_head = new Point3D(x, y, z);
+		Point3D h = new Point3D(x, y, z);
+		if (Point3D.ZERO.equals(h))
+			throw new IllegalArgumentException("asdasdfsdf ");
+		_head = h;
 	}
 	
 	public Vector(Point3D p) {
-		_head = new Point3D(p);
+		Point3D h = new Point3D(p);
+		if (Point3D.ZERO.equals(h))
+			throw new IllegalArgumentException("asdasdfsdf ");
+		_head = h;
 	}
-	
+	 
+	/**
+	 * other is already checked in its constructor
+	 * @param Vector 
+	 */
 	public Vector(Vector other) {
 		_head = new Point3D(other._head);
 	}

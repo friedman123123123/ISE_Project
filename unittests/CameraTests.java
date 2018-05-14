@@ -34,7 +34,7 @@ public class CameraTests {
 			for (int i = 0; i < WIDTH; i++)
 			{
 				Ray ray = camera.constructRayThroughPixel(WIDTH, HEIGHT, i, j, 1, 3 * WIDTH, 3 * HEIGHT);
-				screen[i][j] = ray.get_p00();
+				screen[i][j] = camera.advanceRayToViewPlane(WIDTH, HEIGHT, i, j, 1, 3 * WIDTH, 3 * HEIGHT);
 				System.out.print(screen[i][j]);
 				System.out.println(ray.get_direction());
 				// Checking z-coordinate
@@ -68,7 +68,7 @@ public class CameraTests {
 			for (int i = 0; i < WIDTH; i++)
 			{
 				Ray ray = camera.constructRayThroughPixel(WIDTH, HEIGHT, i, j, 1, 3 * WIDTH, 3 * HEIGHT);
-				screen[i][j] = ray.get_p00();
+				screen[i][j] = camera.advanceRayToViewPlane(WIDTH, HEIGHT, i, j, 1, 3 * WIDTH, 3 * HEIGHT);
 				System.out.print(screen[i][j]);
 				System.out.println(ray.get_direction());
 				// Checking z-coordinate

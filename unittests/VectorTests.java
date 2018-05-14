@@ -84,9 +84,10 @@ public class VectorTests {
 		
 		try {
 			Vector v4 = new Vector(0,0,0);
+			
 			fail("Didn't throw divide by zero exception!");// if we threw exception, we not reach that line, and if we reach that line we have a problem
 		} 
-		catch (ArithmeticException e) {
+		catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}  
 	}

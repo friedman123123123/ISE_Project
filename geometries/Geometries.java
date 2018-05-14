@@ -4,6 +4,7 @@ import java.util.*;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Vector;
 
 public class Geometries extends Geometry{
 	
@@ -20,19 +21,23 @@ public class Geometries extends Geometry{
 	}
 
 	@Override
-	public Ray getNormal(Point3D p) {
+	public Vector getNormal(Point3D p) {
 		return null;
 	}
 
 	@Override
-	public List<Point3D> findIntersectionPoints(Ray r){
-		findIntersections = new ArrayList<Point3D>();
+	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r){
+		findIntersections = new HashMap<Geometry, List<Point3D>>();
+		pointsIntersections = new ArrayList<Point3D>();
 		List<Point3D> intersections = new ArrayList<Point3D>();
+		Map<Geometry, List<Point3D>> map = new HashMap<Geometry, List<Point3D>>();
 		for(Geometry g: geometriesList){
-			intersections = g.findIntersectionPoints(r);
+			map = g.findIntersectionPoints(r);
+			intersections =map.get(g);
 			if (!intersections.isEmpty())
-				findIntersections.addAll(intersections);
+				pointsIntersections.addAll(intersections);
 		}
+		findIntersections.put(this, pointsIntersections);
 		return findIntersections;
 	}
 	

@@ -12,10 +12,10 @@ public class Plane extends Geometry {
 
 	/********** Constructors ***********/
 
-	public Plane(Point3D _p, Vector _normal) {
+	public Plane(Point3D p, Vector normal) {
 		super();
-		_p = new Point3D(_p);
-		_normal = new Vector(_normal).normalize();
+		_p = new Point3D(p);
+		_normal = new Vector(normal).normalize();
 	}
 
 	// Constructor that gets 3 points and founds the normal vector.
@@ -41,56 +41,27 @@ public class Plane extends Geometry {
 	public Point3D get_p() {
 		return _p;
 	}
-
+	
 	public Vector get_normal() {
+		return _normal;
+	}
+	
+	@Override
+	public Vector getNormal(Point3D p) {
 		return _normal;
 	}
 
 	/*************** Admin *****************/
 
-	/**************
-	 * Operations
-	 * 
-	 * @throws Exception
-	 ***************/
-
-	/**
-	 * Returns a ray since it's supposed to return a normal to the plain at a
-	 * specific point (ray is a point and a direction - a vector). Gets the
-	 * normal of the plane at the specific point.
-	 */
-	@Override
-	public Ray getNormal(Point3D p) {
-
-		/*
-		 * // To find the ray we added the normal vector to the plain (which
-		 * starts at (0, 0, 0) and ends at its head) to the point we received in
-		 * the parameters of the function. // Since the normal has only a head
-		 * (since it starts at the origin), the calculation gave us the parallel
-		 * normal vector which starts at that point, as needed. Vector n = new
-		 * Vector(p.add(get_normal())); return new Ray(p, n);
-		 */
-
-		// check if the given point is on the plane
-		/*
-		 * Vector v = new Vector(p.subtract(get_p()));
-		 * if(v.dotProduct(get_normal()) !=0) throw new
-		 * Exception("The received point is not on the plane");
-		 */
-
-		// Since we receive a point and we already have the normal to the plain,
-		// all left to do is return the ray (the point and the direction
-		// (vector)).
-		Vector n = new Vector(get_normal());
-		return new Ray(p, n);
-	}
+	/************** Operations ***************/
 
 	@Override
-	public List<Point3D> findIntersectionPoints(Ray r) {
-		findIntersections = new ArrayList<Point3D>();
+	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r) {
+		findIntersections = new HashMap<Geometry, List<Point3D>>();
+		pointsIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
-		Point3D q0 = new Point3D(get_p());
-		Vector n = new Vector(get_normal());
+		Point3D q0 = new Point3D(_p);
+		Vector n = new Vector(_normal);
 		Vector d = new Vector(r.get_direction());
 		Vector v = new Vector(q0.subtract(p0));
 
@@ -105,7 +76,8 @@ public class Plane extends Geometry {
 		Point3D p;
 		if (t > 0) {
 			p = new Point3D(p0.add(d.scale(t)));
-			findIntersections.add(p);
+			pointsIntersections.add(p);
+			findIntersections.put(this, pointsIntersections);
 		}
 		return findIntersections;
 	}

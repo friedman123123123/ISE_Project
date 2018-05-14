@@ -40,6 +40,7 @@ public class Ray {
 		_p00 = new Point3D(p1);
 		_direction = new Vector(p2).normalize();
 	}
+	
 	public Ray(Ray other) {
 		_p00 = new Point3D(other._p00);
 		_direction = new Vector(other._direction);

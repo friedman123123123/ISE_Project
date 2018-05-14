@@ -16,11 +16,11 @@ public class Triangle extends Plane{
 	private Point3D _p3;
 	/********** Constructors ***********/
 
-	public Triangle(Point3D _p1, Point3D _p2, Point3D _p3) {
-		super(_p1, _p2, _p3);
-		_p1 = new Point3D(_p1);
-		_p2 = new Point3D(_p2);
-		_p3 = new Point3D(_p3);
+	public Triangle(Point3D p1, Point3D p2, Point3D p3) {
+		super(p1, p2, p3);
+		_p1 = new Point3D(p1);
+		_p2 = new Point3D(p2);
+		_p3 = new Point3D(p3);
 	}
 	 
 	// Copy constructor
@@ -48,17 +48,17 @@ public class Triangle extends Plane{
 	
 	/*************** Admin *****************/
 
-	/************** Operations 
-	 * @throws Exception ***************/
+	/************** Operations ***************/
 		
 	@Override
-	public List<Point3D> findIntersectionPoints(Ray r){
-		findIntersections = new ArrayList<Point3D>();
+	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r){
+		findIntersections = new HashMap<Geometry, List<Point3D>>();
+		pointsIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		super.findIntersectionPoints(r);
-		if(findIntersections.isEmpty())
+		if(pointsIntersections.isEmpty())
 			return findIntersections;
-		Vector p_p0 = new Vector(findIntersections.get(findIntersections.size()-1).subtract(p0));
+		Vector p_p0 = new Vector(pointsIntersections.get(pointsIntersections.size()-1).subtract(p0));
 		Vector v1 = new Vector(get_p1().subtract(p0));
 		Vector v2 = new Vector(get_p2().subtract(p0));
 		Vector v3 = new Vector(get_p3().subtract(p0));
@@ -69,7 +69,8 @@ public class Triangle extends Plane{
 		Vector n3 = new Vector(v3.crossProduct(v1));
 		double s3 = p_p0.dotProduct(n3);
 		if(!((s1<0 && s2<0 && s3<0) || (s1>0 && s2>0 && s3>0))){
-			findIntersections.clear();
+			pointsIntersections.clear();
+			findIntersections.put(this, pointsIntersections);
 		}
 		return findIntersections;
 	}

@@ -57,13 +57,14 @@ public class Camera {
 	
 	public Ray constructRayThroughPixel(int Nx, int Ny, int i, int j, double screenDistance, double	screenWidth, double	screenHeight)
 	{
-		Point3D pC = get_p0().add(get_vTo().scale(screenDistance));
-		// Point3D p1 = new Point3D(pC).add(get_vUp().scale(0.5*screenHeight));
-		// Point3D p2 = new Point3D(pC).add(get_vUp().scale(-0.5*screenHeight));
+		Point3D p = advanceRayToViewPlane(Nx, Ny, i, j, screenDistance, screenWidth, screenHeight);
+		return new Ray(_p0, p.subtract(_p0)); 
+	}
+	
+	public Point3D advanceRayToViewPlane(int Nx, int Ny, int i, int j, double screenDistance, double	screenWidth, double	screenHeight) {
+		Point3D pC = _p0.add(get_vTo().scale(screenDistance));
 		double Rx = screenWidth / Nx;
 		double Ry = screenHeight / Ny;
-		//double y = (j + 0.5)*Ry; // remember: try catch
-		//double x = (i + 0.5)*Rx;
 		double y = (j - Ny/2.0 + 0.5)*Ry;
 		double x = (i - Nx/2.0 + 0.5)*Rx;
 
@@ -72,8 +73,6 @@ public class Camera {
 			p = p.add(get_vRight().scale(x));
 		if (y != 0.0)
 			p = p.add(get_vUp().scale(-y));
-		
-		return new Ray(_p0, p.subtract(get_p0())); 
+		return new Point3D(p);
 	}
-	
 }

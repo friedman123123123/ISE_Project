@@ -12,9 +12,9 @@ public class Cylinder extends RadialGeometry {
 	/********** Constructors ***********/
 
 	
-	public Cylinder(double _radius, Ray _axisRay) {
-		super(_radius);
-		_axisRay = new Ray(_axisRay);
+	public Cylinder(double radius, Ray axisRay) {
+		super(radius);
+		_axisRay = new Ray(axisRay);
 	}
 
 	// Copy constructor
@@ -38,7 +38,7 @@ public class Cylinder extends RadialGeometry {
 	 *  Gets the normal of the cylinder at a specific point.
 	 */
 	@Override
-	public Ray getNormal(Point3D p) {
+	public Vector getNormal(Point3D p) {
 		// First we want to find the point on the ray of the cylinder in which the normal to the given point (of the function) goes throw.
 		// To implement this, we use the initial point of the ray and the given point, and since we know the normal creates a right angle, we get a right triangle.
 		// Then, with the length between the two points and the radius of the cylinder which function as one of the edges, we can find the last edge using the Pythagoraen theorem. 
@@ -57,12 +57,14 @@ public class Cylinder extends RadialGeometry {
 		// Finding the point on which the normalized normal to the cylinder ends, and returning ray (point and vector).
 		Vector v3 = new Vector(v2.normalize().scale(l));
 		Point3D p2 = new Point3D(p1.add(v3));
-		return new Ray(p, p2.subtract(p));
+		return new Vector(p2.subtract(p));
 	}
 
 	@Override
-	public List<Point3D> findIntersectionPoints(Ray r){
-		findIntersections = new ArrayList<Point3D>();
+	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r){
+		pointsIntersections = new ArrayList<Point3D>();
+		findIntersections = new HashMap<Geometry, List<Point3D>>();
+		//findIntersections.put(this, pointsIntersections);
 		return findIntersections;
 	}
 }

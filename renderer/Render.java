@@ -7,6 +7,7 @@ import java.util.*;
 
 import org.junit.validator.PublicClassValidator;
 
+import geometries.Geometry;
 import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
@@ -59,16 +60,16 @@ public class Render {
 			for (int j = 0; j < _imageWriter.getNy(); j++) {
 				Ray ray = _scene.get_camera().constructRayThroughPixel(_imageWriter.getNx(), _imageWriter.getNy(), i, j,
 						_scene.get_distance(), _imageWriter.getWidth(), _imageWriter.getHeight());
-				List<Point3D> intersectionsPoints = new ArrayList<Point3D>(
+				Map<Geometry, List<Point3D>> intersectionsPoints = new HashMap<Geometry, List<Point3D>>(
 						_scene.get_geometries().findIntersectionPoints(ray));
-				if (intersectionsPoints.size() == 0)
+				if (intersectionsPoints.isEmpty())
 					_imageWriter.writePixel(i, j, _scene.get_background().getColor());
 				else {
-					//System.out.println(intersectionsPoints);
-					Point3D closestPoint = getClosestPoint(intersectionsPoints);
-					//System.out.println(closestPoint);
-					//System.out.println("(" + i + "," + j + ")");
-					//System.exit(0);
+					// System.out.println(intersectionsPoints);
+					Map<Geometry, Point3D> closestPoint = getClosestPoint(intersectionsPoints);
+					// System.out.println(closestPoint);
+					// System.out.println("(" + i + "," + j + ")");
+					// System.exit(0);
 					_imageWriter.writePixel(i, j, calcColor(closestPoint).getColor());
 					// _imageWriter.writePixel(i, j, 255,255,255);
 				}
@@ -78,19 +79,26 @@ public class Render {
 
 	}
 
-	private Color calcColor(Point3D p) {
-		return _scene.get_ambientLight().getIntensity();
+	private Color calcColor(Geometry geometry, Point3D p) {
+		Color color = _scene.get_ambientLight().getIntensity();
+		color = color.add(geometry.get_emission());
+		return color;
 	}
 
-	private Point3D getClosestPoint(List<Point3D> points) {
+	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> points) {
 		double minDistance = Double.MAX_VALUE;
 		Point3D minp = null;
-		for (Point3D p : points) {
-			if (_scene.get_camera().get_p0().distanceSqrt(p) < minDistance) {
-				minDistance = _scene.get_camera().get_p0().distanceSqrt(p);
-				minp = new Point3D(p);
-			}
-		}
-		return minp;
+		Map<Geometry, Point3D> closestPoint = new HashMap<Geometry, Point3D>();
+		points.forEach((k, v) -> {
+			for (Point3D p : v) {
+				if (_scene.get_camera().get_p0().distanceSqrt(p) < minDistance) {
+					minDistance = _scene.get_camera().get_p0().distanceSqrt(p);
+					minp = new Point3D(p);
+					closestPoint.clear();
+					closestPoint.put(k, minp);
+				}
+			}			
+		});
+		return closestPoint;
 	}
 }
