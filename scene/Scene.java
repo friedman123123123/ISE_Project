@@ -47,32 +47,32 @@ public class Scene {
 		return _background;
 	}
 	
-	public void set_name(String _name) {
-		this._name = _name;
+	public void set_name(String name) {
+		_name = name;
 	}
 
-	public void set_camera(Camera _camera) {
-		this._camera = _camera;
+	public void set_camera(Camera camera) {
+		_camera = camera;
 	}
 
-	public void set_distance(double _distance) {
-		this._distance = _distance;
+	public void set_distance(double distance) {
+		_distance = distance;
 	}
 
-	public void set_geometries(Geometries _geometries) {
-		this._geometries = _geometries;
+	public void set_geometries(Geometries geometries) {
+		_geometries = geometries;
 	}
 
-	public void set_ambientLight(AmbientLight _ambientLight) {
-		this._ambientLight = _ambientLight;
+	public void set_ambientLight(AmbientLight ambientLight) {
+		_ambientLight = ambientLight;
 	}
 
-	public void set_background(Color _background) {
-		this._background = _background;
+	public void set_background(Color background) {
+		_background = background;
 	}
 
 	/*************** Admin *****************/
-	/************** Operations ***************/
+	/************** Operations **************/
 
 	public void addGeometry(Geometry g){
 		_geometries.add(g);

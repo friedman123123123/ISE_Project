@@ -72,9 +72,9 @@ public class Point3D extends Point2D {
 	}
 
 	public double distanceSqrt(Point3D p) {
-		double x = (p._x.subtract(this.getX())).get() * (p.getX().subtract(this.getX())).get();
-		double y = (p.getY().subtract(this.getY())).get() * (p.getY().subtract(this.getY())).get();
-		double z = ((p.getZ().subtract(_z)).get()) * ((p.getZ().subtract(_z)).get());
+		double x = (p._x.subtract(_x)).get() * (p._x.subtract(_x)).get();
+		double y = (p._y.subtract(_y)).get() * (p._y.subtract(_y)).get();
+		double z = ((p._z.subtract(_z)).get()) * ((p._z.subtract(_z)).get());
 		return (x + y + z);
 	}
 
@@ -115,9 +115,9 @@ public class Point3D extends Point2D {
 	 * @return
 	 */
 	private double _distance(Point3D p) {
-		double x = Math.pow((p.getX().subtract(this.getX())).get(), 2);
-		double y = Math.pow((p.getY().subtract(this.getY())).get(), 2);
-		double z = Math.pow((p.getZ().subtract(_z)).get(), 2);
+		double x = (p._x.subtract(_x)).get() * (p._x.subtract(_x)).get();
+		double y = (p._y.subtract(_y)).get() * (p._y.subtract(_y)).get();
+		double z = ((p._z.subtract(_z)).get()) * ((p._z.subtract(_z)).get());
 		return Math.sqrt(x + y + z);
 	}
 }

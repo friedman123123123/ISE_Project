@@ -35,8 +35,8 @@ public class AmbientLight {
 		return _Ka;
 	}
 
-	public void set_color(Color _color) {
-		this._color = _color;
+	public void set_color(Color c) {
+		_color = c;
 	}
 
 	public void setKa(double ka) {
