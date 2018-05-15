@@ -4,6 +4,7 @@ import geometries.Cylinder;
 import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;
+import primitives.Color;
 import primitives.Coordinate;
 import primitives.Point2D;
 import primitives.Point3D;
@@ -31,10 +32,10 @@ public class Main {
 		Ray ray1 = new Ray(4, 4, 1, v1);
 		Ray ray2 = new Ray(p4, 2, 2, 3);
 		
-		Cylinder cy = new Cylinder(3, ray);
-		Plane pl = new Plane(p3, v);
-		Sphere s = new Sphere(8, p4);
-		Triangle t = new Triangle(p3, p4, p5);
+		Cylinder cy = new Cylinder(3, ray ,new Color(255,0,0));
+		Plane pl = new Plane(p3, v,new Color(255,0,0));
+		Sphere s = new Sphere(8, p4,new Color(255,0,0));
+		Triangle t = new Triangle(p3, p4, p5,new Color(255,0,0));
 		
 		// Checking the Coordinate class
 		System.out.println(c.add(c1));
@@ -57,7 +58,7 @@ public class Main {
 		System.out.println(v1.normalize().toString());
 	
 		Point3D p6 = new Point3D(-1.8,2.7,7.55);
-		Plane p10 = new Plane(p3,p4,p5);
+		Plane p10 = new Plane(p3,p4,p5,new Color(255,0,0));
 		System.out.println(p10.getNormal(p6));
 		
 		System.out.println(t.getNormal(p6));
@@ -66,7 +67,7 @@ public class Main {
 		System.out.println(s.getNormal(p7));
 		
 		Ray ray3 = new Ray(0, -8, 0, 3.97, 2.34, 0);
-		Cylinder cy1 = new Cylinder(3, ray3);
+		Cylinder cy1 = new Cylinder(3, ray3,new Color(255,0,0));
 		Point3D p8 = new Point3D(-0.13, -1.09, 1.5);
 		System.out.println(cy1.getNormal(p8));
 	}
