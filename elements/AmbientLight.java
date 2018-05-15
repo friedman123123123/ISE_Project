@@ -14,7 +14,7 @@ public class AmbientLight {
 
 	/********** Constructors ***********/
 	public AmbientLight() {
-		_color = new Color(255, 255, 255);
+		_color = new Color(0, 0, 0);
 		_Ka = 1;
 		_intensity = new Color(_color).scale(_Ka);
 	}

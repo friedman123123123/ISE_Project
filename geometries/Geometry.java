@@ -12,7 +12,7 @@ import primitives.Vector;
  *
  */
 public abstract class Geometry {
-	private Color _emission;//represent the color of a geometry
+	protected Color _emission;//represents the color of a geometry
 
 	protected ArrayList<Point3D> pointsIntersections;
 	protected Map<Geometry, List<Point3D>> findIntersections;
@@ -22,7 +22,7 @@ public abstract class Geometry {
 
 	// Default constructor
 	public Geometry() {
-
+		
 	}
 
 	// Copy constructor

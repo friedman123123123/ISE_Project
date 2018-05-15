@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.*;
 
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -16,8 +17,8 @@ public class Triangle extends Plane{
 	private Point3D _p3;
 	/********** Constructors ***********/
 
-	public Triangle(Point3D p1, Point3D p2, Point3D p3) {
-		super(p1, p2, p3);
+	public Triangle(Point3D p1, Point3D p2, Point3D p3, Color emission) {
+		super(p1, p2, p3, emission);
 		_p1 = new Point3D(p1);
 		_p2 = new Point3D(p2);
 		_p3 = new Point3D(p3);
@@ -44,6 +45,11 @@ public class Triangle extends Plane{
 
 	public Point3D get_p3() {
 		return _p3;
+	}
+	
+	@Override
+	public Color get_emission() {
+		return _emission;
 	}
 	
 	/*************** Admin *****************/

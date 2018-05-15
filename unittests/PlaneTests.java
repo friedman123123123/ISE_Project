@@ -9,6 +9,7 @@ import org.junit.Test;
 import elements.Camera;
 import geometries.Geometry;
 import geometries.Plane;
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -23,11 +24,11 @@ public class PlaneTests {
 		Ray[][] rays = new Ray [HEIGHT][WIDTH];
 		Camera camera = new Camera(new Point3D(0.0 ,0.0 ,0.0), new Vector (0.0, 1.0, 0.0), new Vector (0.0, 0.0, -1.0));
 		// plane orthogonal to the view plane
-		Plane plane = new Plane(new Point3D(0.0, 0.0, -3.0), new Vector(0.0, 0.0, -1.0));
+		Plane plane = new Plane(new Point3D(0.0, 0.0, -3.0), new Vector(0.0, 0.0, -1.0), new Color(111,111, 111));
 		// 45 degrees to the view plane
-		Plane plane2 = new Plane(new Point3D(0.0, 0.0, -3.0), new Vector(0.0, 0.25, -1.0));
+		Plane plane2 = new Plane(new Point3D(0.0, 0.0, -3.0), new Vector(0.0, 0.25, -1.0), new Color(111,111, 111));
 		// plane with contained rays
-		Plane plane3 = new Plane(new Point3D(3,3,-1), new Point3D(5.14,5.14,-1.71), new Point3D(7,0,0));
+		Plane plane3 = new Plane(new Point3D(3,3,-1), new Point3D(5.14,5.14,-1.71), new Point3D(7,0,0), new Color(111,111, 111));
 		
 		
 		
@@ -69,7 +70,7 @@ public class PlaneTests {
 			System.out.println(iPoint);
 	}
 
-}
+
 
 		/*Map<Geometry, List<Point3D>> intersectionPointsPlane = new HashMap<Geometry, List<Point3D>>();
 		Map<Geometry, List<Point3D>> intersectionPointsPlane2 = new HashMap<Geometry, List<Point3D>>();
@@ -96,3 +97,4 @@ public class PlaneTests {
 		Vector vector0 = new Vector(0, 0, 1);
 		assertEquals(vector0, plane.get_normal());
 	}
+}

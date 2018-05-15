@@ -9,6 +9,7 @@ import org.junit.Test;
 import elements.Camera;
 import geometries.Geometry;
 import geometries.Sphere;
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -22,9 +23,9 @@ public class SphereTests {
 		final int HEIGHT = 3;
 		Ray[][] rays = new Ray [HEIGHT][WIDTH];
 		Camera camera = new Camera(new Point3D(0.0 ,0.0 ,0.0), new Vector (0.0, 1.0, 0.0),new Vector (0.0, 0.0, -1.0));
-		Sphere sphere = new Sphere(1, new Point3D(0.0, 0.0, -3.0));
-		Sphere sphere2 = new Sphere(10, new Point3D(0.0, 0.0, -3.0));
-		Sphere sphere3 = new Sphere(1, new Point3D(0, 1, -4));// sphere for boundry test with one intersection(tangent)
+		Sphere sphere = new Sphere(1, new Point3D(0.0, 0.0, -3.0), new Color(111,111, 111));
+		Sphere sphere2 = new Sphere(10, new Point3D(0.0, 0.0, -3.0),new Color(111,111, 111));
+		Sphere sphere3 = new Sphere(1, new Point3D(0, 1, -4),new Color(111,111, 111));// sphere for boundry test with one intersection(tangent)
 		
 		// Only the center ray intersect the sphere in two locations
 		List<Point3D> intersectionPointsSphere = new ArrayList<Point3D>();
@@ -69,17 +70,19 @@ public class SphereTests {
 				System.out.println(jPoint);
 		}
 	}
-}
-
-
 	@Test
 	public void test_sphere() {
 
 		Point3D ps =new Point3D(0,3,0);
 		Point3D ps2 =new Point3D(0,1,0);
-		Sphere sphere=new Sphere(ps, 2,new Color(111,111, 111));
+		Sphere sphere=new Sphere(2, ps, new Color(111,111, 111));
 		Vector normal = new Vector(0, -1, 0);
 	
-		assertEquals(normal, sphere.getNormal(ps2));
+		Vector vector = new Vector(sphere.getNormal(ps2));
+		assertEquals(normal, vector);
 
 	}
+}
+
+
+	

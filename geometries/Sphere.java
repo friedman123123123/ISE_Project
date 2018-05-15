@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.*;
 
+import primitives.Color;
 import primitives.Coordinate;
 import primitives.Point3D;
 import primitives.Ray;
@@ -12,9 +13,10 @@ public class Sphere extends RadialGeometry {
 	
 	/********** Constructors ***********/
 
-	public Sphere(double radius, Point3D center) {
+	public Sphere(double radius, Point3D center, Color emission) {
 		super(radius);
 		_center = new Point3D(center);
+		_emission = new Color(emission);
 	}
 
 	// Copy constructor
@@ -23,10 +25,10 @@ public class Sphere extends RadialGeometry {
 	public Sphere(Sphere other) {
 		super(other);
 		_center = new Point3D(other._center);
+		_emission = new Color(other._emission);
 	}
 	
-	/************** Getters/Setters *******/	
-	
+	/************** Getters/Setters *******/
 	public Point3D get_center() {
 		return _center;
 	}
@@ -36,7 +38,9 @@ public class Sphere extends RadialGeometry {
 	/************** Operations ***************/
 	
 	/**
-	 *  Gets the normal of the sphere at the specific point.
+	 * Calculate the normal to the geometry
+	 * @param Point3D
+	 * @return Vector
 	 */
 	@Override
 	public Vector getNormal(Point3D p) {
