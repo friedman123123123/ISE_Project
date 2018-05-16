@@ -90,13 +90,17 @@ public class Render {
 
 	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> points) {
 		double minDistance = Double.MAX_VALUE;
-		Point3D minp = this._scene.get_camera().get_p0();
+		Point3D minp = _scene.get_camera().get_p0();
 		Map<Geometry, Point3D> closestPoint = new HashMap<Geometry, Point3D>();
-
+		Point3D p0 = _scene.get_camera().get_p0();
+		double d;
 		for (Map.Entry<Geometry, List<Point3D>> entry : points.entrySet()) {
 			for (Point3D p : entry.getValue()) {
-				if (_scene.get_camera().get_p0().distanceSqrt(p) < minDistance) {
-					minDistance = _scene.get_camera().get_p0().distanceSqrt(p);
+				d = p0.distanceSqrt(p);
+				if(d < minDistance){
+				//if (_scene.get_camera().get_p0().distanceSqrt(p) < minDistance) {
+				//	minDistance = _scene.get_camera().get_p0().distanceSqrt(p);
+					minDistance =d;
 					minp = new Point3D(p);
 					closestPoint.clear();
 					closestPoint.put(entry.getKey(), minp);
