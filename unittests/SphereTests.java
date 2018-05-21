@@ -71,7 +71,7 @@ public class SphereTests {
 		}
 	}
 	@Test
-	public void test_sphere() {
+	public void NormalTest() {
 
 		Point3D ps =new Point3D(0,3,0);
 		Point3D ps2 =new Point3D(0,1,0);

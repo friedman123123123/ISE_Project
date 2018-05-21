@@ -1,2 +1,7 @@
 /Camera.class
 /AmbientLight.class
+/Light.class
+/DirectionalLight.class
+/PointLight.class
+/SpotLight.class
+/LightSource.class

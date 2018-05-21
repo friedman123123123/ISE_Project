@@ -7,47 +7,41 @@ import primitives.Point3D;
  * @author Daniel & Yonathan
  *
  */
-public class AmbientLight {
-	private Color _color;
+public class AmbientLight extends Light{
 	private double _Ka;
 	private Color _intensity;
 
 	/********** Constructors ***********/
 	public AmbientLight() {
-		_color = new Color(0, 0, 0);
+		super(new Color(0,0,0));
 		_Ka = 1;
-		_intensity = new Color(_color).scale(_Ka);
-	}
+		_intensity = new Color(0,0,0).scale(_Ka);
+		}
 
 	public AmbientLight(Color color, double ka) {
-		_color = color;
+		super(color);
 		_Ka = ka;
-		_intensity = new Color(_color).scale(_Ka);
+		_intensity = new Color(color.scale(_Ka));
 	}
 
 	/************** Getters/Setters *******/
 
-	public Color get_color() {
-		return _color;
-	}
 
 	public double getKa() {
 		return _Ka;
-	}
-
-	public void set_color(Color c) {
-		_color = c;
 	}
 
 	public void setKa(double ka) {
 		_Ka = ka;
 	}
 
+	/************** Operations ***************/
 	/**
-	 * @return final ambient light after multiply by _Ka
+	 * final ambient light after multiply by _Ka
+	 * @return Color
 	 */
-	public Color getIntensity()
-	{
-		return _intensity;
+	@Override
+	public Color getIntensity() {
+		return new Color(_intensity);
 	}
 }

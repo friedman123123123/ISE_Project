@@ -89,13 +89,13 @@ public class Color {
 	}
 
 	/**
-	 * Updates the color by scaling its intensity by d
-	 * @param double - scaling coefficient
+	 * Updates the color by scaling its intensity by d - scaling coefficient
+	 * @param double
 	 * @return Color
 	 */
 	public Color scale(double d) {
-		if (d < 1)
-			throw new ArithmeticException("Scaling color with a value smaller than 1");
+		//if (d < 1)
+			//throw new ArithmeticException("Scaling color with a value smaller than 1");
 		_red *= d;
 		_green *= d;
 		_blue *= d;
@@ -103,13 +103,17 @@ public class Color {
 	}
 
 	/**
-	 * @param d the value we want to reduce our color
-	 * @return a color that its intensity reduced by d
+	 * Updates the color by reducing its intensity by d - scaling coefficient
+	 * @param double
+	 * @return Color
 	 */
 	public Color reduce(double d) {
-		if (d <= 0 || d > 1)
+		if (d <= 0)
 			throw new ArithmeticException("Reducing color with a value out of 0 to 1 range");
-		return scale(d);
+		else if (d > 1)
+			return scale(1 / d);
+		else
+			return scale(d);
 	}
 
 }

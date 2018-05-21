@@ -3,6 +3,7 @@ package geometries;
 import java.util.*;
 
 import primitives.Color;
+import primitives.Material;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -13,10 +14,11 @@ public class Cylinder extends RadialGeometry {
 	/********** Constructors ***********/
 
 	
-	public Cylinder(double radius, Ray axisRay, Color emission) {
+	public Cylinder(double radius, Ray axisRay, Color emission, Material material) {
 		super(radius);
 		_axisRay = new Ray(axisRay);
 		_emission = emission;
+		_material = material;
 	}
 
 	// Copy constructor
@@ -26,6 +28,7 @@ public class Cylinder extends RadialGeometry {
 		super(other);
 		_axisRay = new Ray(other._axisRay);
 		_emission = other._emission;
+		_material = new Material(other._material);
 	}
 	
 	/************** Getters/Setters *******/		

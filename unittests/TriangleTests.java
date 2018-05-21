@@ -81,7 +81,7 @@ public class TriangleTests {
 	}
 
 	@Test
-	public void test_triangle() {
+	public void NormalTest() {
 
 		Point3D p1 = new Point3D(0, 4, 3);
 		Point3D p2 = new Point3D(4, 0, 3);
@@ -89,7 +89,7 @@ public class TriangleTests {
 
 		Triangle triangle = new Triangle(p1, p2, p3, new Color(111, 111, 111));
 		Vector normal = new Vector(0, 0, 1);
-
+		Vector vector = triangle.get_normal();
 		assertEquals(normal, triangle.get_normal());
 
 	}

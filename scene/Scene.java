@@ -1,7 +1,11 @@
 package scene;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import elements.AmbientLight;
 import elements.Camera;
+import elements.LightSource;
 import geometries.Geometries;
 import geometries.Geometry;
 import primitives.Color;
@@ -16,10 +20,13 @@ public class Scene {
 	private Camera _camera;
 	private double _distance;
 	private AmbientLight _ambientLight;
+	private List<LightSource> _lights;
+
 	
 	/********** Constructors ***********/
 	public Scene(String name) {
 		_name = name;
+		_lights = new ArrayList<LightSource>();
 	}
 
 	/************** Getters/Setters *******/
@@ -47,6 +54,10 @@ public class Scene {
 		return _background;
 	}
 	
+	public List<LightSource> get_lights() {
+		return _lights;
+	}
+
 	public void set_name(String name) {
 		_name = name;
 	}
@@ -69,6 +80,10 @@ public class Scene {
 
 	public void set_background(Color background) {
 		_background = background;
+	}
+
+	public void set_lights(List<LightSource> lights) {
+		_lights = lights;
 	}
 
 	/*************** Admin *****************/

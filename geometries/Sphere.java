@@ -4,6 +4,7 @@ import java.util.*;
 
 import primitives.Color;
 import primitives.Coordinate;
+import primitives.Material;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -13,10 +14,11 @@ public class Sphere extends RadialGeometry {
 	
 	/********** Constructors ***********/
 
-	public Sphere(double radius, Point3D center, Color emission) {
+	public Sphere(double radius, Point3D center, Color emission, Material material) {
 		super(radius);
 		_center = new Point3D(center);
 		_emission = new Color(emission);
+		_material = new Material(material);
 	}
 
 	// Copy constructor
@@ -26,6 +28,7 @@ public class Sphere extends RadialGeometry {
 		super(other);
 		_center = new Point3D(other._center);
 		_emission = new Color(other._emission);
+		_material = new Material(other._material);
 	}
 	
 	/************** Getters/Setters *******/

@@ -88,7 +88,7 @@ public class PlaneTests {
 		});*/
 
 	@Test
-	public void test_plane() {
+	public void NormalTest() {
 
 		Vector normal = new Vector(0, 0, 1);
 		Point3D point = new Point3D(0, 0, 0);
