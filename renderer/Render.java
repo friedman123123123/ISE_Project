@@ -107,6 +107,7 @@ public class Render {
 		int nShininess = geometry.get_material().get_nShininess();
 		double kd = geometry.get_material().get_Kd();
 		double ks = geometry.get_material().get_Ks();
+		
 		for (LightSource lightSource : _scene.get_lights()) {
 			Vector l = new Vector(lightSource.getL(p).normalize());
 			if (n.dotProduct(l) * n.dotProduct(v) > 0) {
@@ -130,7 +131,7 @@ public class Render {
 	 */
 	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
 		Vector r = l.add(n.scale(2*(l.dotProduct(n))));
-		return new Color(lightIntensity.scale(ks*Math.pow(Math.abs(r.dotProduct(v)), nShininess)));
+		return (lightIntensity.scale(ks*Math.pow(Math.abs(r.dotProduct(v)), nShininess)));
 	}
 
 	
@@ -142,7 +143,7 @@ public class Render {
 	 * @return Color
 	 */
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-		return new Color(lightIntensity.scale(kd*Math.abs(l.dotProduct(n))));
+		return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
 	}
 
 	/** Finds the closest point on a geometry from list of points of ray intersection
