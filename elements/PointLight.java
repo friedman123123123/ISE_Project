@@ -40,15 +40,13 @@ public class PointLight extends Light implements LightSource {
 	@Override
 	public Color getIntensity(Point3D p) {
 		double l = _position.distance(p);
-	//	double d = (_Kc < 1 ? _Kc = 1 : _Kc) + _Kl * l + _Kq * l * l;
-		double d = 1 + _Kl * l + _Kq * l * l;
-
+		double d = (_Kc < 1 ? _Kc = 1 : _Kc) + _Kl * l + _Kq * l * l;
 		return getIntensity().reduce(d);
 	}
 
 	@Override
 	public Vector getL(Point3D p) {
-		return (p.subtract(_position));
+		return p.subtract(_position);
 	}
 
 	@Override

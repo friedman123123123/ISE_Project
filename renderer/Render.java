@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import org.junit.validator.PublicClassValidator;
 
+import elements.Light;
 import elements.LightSource;
 import primitives.Vector;
 import geometries.Geometry;
@@ -102,7 +103,7 @@ public class Render {
 		Color color = new Color(_scene.get_ambientLight().getIntensity());
 		color = color.add(geometry.get_emission());
 
-		Vector v = p.subtract(_scene.get_camera().get_p0());
+		Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();//normalize
 		Vector n = geometry.getNormal(p);
 		int nShininess = geometry.get_material().get_nShininess();
 		double kd = geometry.get_material().get_Kd();
@@ -130,8 +131,11 @@ public class Render {
 	 * @return Color
 	 */
 	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-		Vector r = l.add(n.scale(2*(l.dotProduct(n))));
-		return (lightIntensity.scale(ks*Math.pow(Math.abs(r.dotProduct(v)), nShininess)));
+		Vector r = l.add(n.scale(-2*(l.dotProduct(n)))).normalize();// -2 or +2?
+		if(v.dotProduct(r) > 0)
+			return new Color(0,0,0);
+		return new Color(lightIntensity).scale(ks*Math.pow(Math.abs(r.dotProduct(v)), nShininess));
+
 	}
 
 	
@@ -143,7 +147,7 @@ public class Render {
 	 * @return Color
 	 */
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-		return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
+		return new Color(lightIntensity).scale(kd*Math.abs(l.dotProduct(n)));
 	}
 
 	/** Finds the closest point on a geometry from list of points of ray intersection

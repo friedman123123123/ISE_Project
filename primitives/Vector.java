@@ -6,7 +6,7 @@ package primitives;
  */
 public class Vector {
 	private Point3D _head;
-	
+
 	/********** Constructors ***********/
 	public Vector(Coordinate x, Coordinate y, Coordinate z) {
 		Point3D h = new Point3D(x, y, z);
@@ -14,24 +14,25 @@ public class Vector {
 			throw new IllegalArgumentException("asdasdfsdf ");
 		_head = h;
 	}
-	
+
 	public Vector(double x, double y, double z) {
 		Point3D h = new Point3D(x, y, z);
 		if (Point3D.ZERO.equals(h))
 			throw new IllegalArgumentException("asdasdfsdf ");
 		_head = h;
 	}
-	
+
 	public Vector(Point3D p) {
 		Point3D h = new Point3D(p);
 		if (Point3D.ZERO.equals(h))
 			throw new IllegalArgumentException("asdasdfsdf ");
 		_head = h;
 	}
-	 
+
 	/**
 	 * other is already checked in its constructor
-	 * @param Vector 
+	 * 
+	 * @param Vector
 	 */
 	public Vector(Vector other) {
 		_head = new Point3D(other._head);
@@ -45,9 +46,11 @@ public class Vector {
 	/*************** Admin *****************/
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (!(obj instanceof Vector)) 
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Vector))
 			return false;
 		Vector other = (Vector) obj;
 		return _head.equals(other._head);
@@ -57,37 +60,39 @@ public class Vector {
 	public String toString() {
 		return "" + _head;
 	}
-	
+
 	/************** Operations ***************/
-	//For every operation returns a new object to prevent any problems.
-	
+	// For every operation returns a new object to prevent any problems.
+
 	public Vector add(Vector v) {
 		return new Vector(_add(v));
 	}
-	
+
 	public Vector subtract(Vector v) {
 		return new Vector(_subtract(v));
 	}
-	
+
 	public Vector scale(double s) {
 		return new Vector(_scale(s));
 	}
-	
+
 	public double dotProduct(Vector v) {
 		return _dotProduct(v);
 	}
-	
+
 	public Vector crossProduct(Vector v) {
-		 return new Vector(_crossProduct(v));
+		return new Vector(_crossProduct(v));
 	}
-	
+
 	public double length() {
 		return _length();
 	}
-	
-	/************** Helpers ***************/	
+
+	/************** Helpers ***************/
 	/**
-	 * Calling Coordinate's add method to economize re-checking addition of coordinations.
+	 * Calling Coordinate's add method to economize re-checking addition of
+	 * coordinations.
+	 * 
 	 * @param v
 	 * @return
 	 */
@@ -97,9 +102,11 @@ public class Vector {
 		Coordinate z = _head.getZ().add(v.getHead().getZ());
 		return new Vector(x, y, z);
 	}
-	
+
 	/**
-	 * Calling Coordinate's subtract method to economize re-checking subtraction of coordinations.
+	 * Calling Coordinate's subtract method to economize re-checking subtraction
+	 * of coordinations.
+	 * 
 	 * @param v
 	 * @return
 	 */
@@ -109,9 +116,11 @@ public class Vector {
 		Coordinate z = _head.getZ().subtract(v.getHead().getZ());
 		return new Vector(x, y, z);
 	}
-	
+
 	/**
-	 * Calling Coordinate's scale method to economize re-checking multiplication by scalar of coordinations.
+	 * Calling Coordinate's scale method to economize re-checking multiplication
+	 * by scalar of coordinations.
+	 * 
 	 * @param s
 	 * @return
 	 */
@@ -121,11 +130,12 @@ public class Vector {
 		Coordinate z = _head.getZ().scale(s);
 		return new Vector(x, y, z);
 	}
-	
-	
-	/**Calling Coordinate's multiply method to economize re-checking multiplication of coordinations.
-	 * Using the linear equation to calculate dot product:
-	 * u * v = u1*v1 + u2*v2 + u3*v3
+
+	/**
+	 * Calling Coordinate's multiply method to economize re-checking
+	 * multiplication of coordinations. Using the linear equation to calculate
+	 * dot product: u * v = u1*v1 + u2*v2 + u3*v3
+	 * 
 	 * @param v
 	 * @return
 	 */
@@ -135,10 +145,13 @@ public class Vector {
 		Coordinate z = _head.getZ().multiply(v.getHead().getZ());
 		return x.get() + y.get() + z.get();
 	}
-	
-	/**Calling Coordinate's multiply and subtract methods to economize re-checking multiplication and subtraction of coordinations.
-	 * Using the linear equation to calculate cross product:
-	 * u x v = (u2*v3 - u3*v2, u3*v1 - u1*v3, u1*v2 - u2*v1)
+
+	/**
+	 * Calling Coordinate's multiply and subtract methods to economize
+	 * re-checking multiplication and subtraction of coordinations. Using the
+	 * linear equation to calculate cross product: u x v = (u2*v3 - u3*v2, u3*v1
+	 * - u1*v3, u1*v2 - u2*v1)
+	 * 
 	 * @param v
 	 * @return
 	 */
@@ -148,26 +161,30 @@ public class Vector {
 		Coordinate z = (_head.getX().multiply(v.getHead().getY())).subtract(_head.getY().multiply(v.getHead().getX()));
 		return new Vector(x, y, z);
 	}
-	
-	/**The length of a vector v, ||v||, is the equation:
-	 * sqrt((x)^2 + (y)^2 + (z)^2)
-	 *  since every vector starts from the origin (0, 0, 0).
-	 * (Elsewhere, it would have used the normal distance equation, as shown in class Point3D.)
+
+	/**
+	 * The length of a vector v, ||v||, is the equation: sqrt((x)^2 + (y)^2 +
+	 * (z)^2) since every vector starts from the origin (0, 0, 0). (Elsewhere,
+	 * it would have used the normal distance equation, as shown in class
+	 * Point3D.)
+	 * 
 	 * @return
 	 */
 	private double _length() {
 		return Math.sqrt(this.dotProduct(this));
 	}
-	
-	/**The normalization of a vector v, is the vector itself divided by its length, as in the equation:
-	 * nor(v) = v / ||v||
+
+	/**
+	 * The normalization of a vector v, is the vector itself divided by its
+	 * length, as in the equation: nor(v) = v / ||v||
+	 * 
 	 * @return
 	 */
 	public Vector normalize() {
 		double l = this.length();
-		double x = _head.getX().get()/l;
-		double y = _head.getY().get()/l;
-		double z = _head.getZ().get()/l;
+		double x = _head.getX().get() / l;
+		double y = _head.getY().get() / l;
+		double z = _head.getZ().get() / l;
 		_head = new Point3D(x, y, z);
 		return this;
 	}
