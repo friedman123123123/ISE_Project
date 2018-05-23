@@ -55,7 +55,7 @@ public class Plane extends Geometry {
 	
 	@Override
 	public Vector getNormal(Point3D p) {
-		return _normal;
+		return new Vector(_normal);
 	}
 
 	/*************** Admin *****************/

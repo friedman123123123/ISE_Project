@@ -49,6 +49,7 @@ public class Render {
 	/***************** Operations ********************/
 	/**
 	 * prints a grid
+	 * 
 	 * @param int
 	 */
 	public void printGrid(int interval) {
@@ -94,7 +95,9 @@ public class Render {
 
 	}
 
-	/** Calculates the color
+	/**
+	 * Calculates the color
+	 * 
 	 * @param Geometry
 	 * @param Point3D
 	 * @return Color
@@ -103,55 +106,75 @@ public class Render {
 		Color color = new Color(_scene.get_ambientLight().getIntensity());
 		color = color.add(geometry.get_emission());
 
-		Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();//normalize
+		Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();// normalize
 		Vector n = geometry.getNormal(p);
 		int nShininess = geometry.get_material().get_nShininess();
 		double kd = geometry.get_material().get_Kd();
 		double ks = geometry.get_material().get_Ks();
-		
+
 		for (LightSource lightSource : _scene.get_lights()) {
 			Vector l = new Vector(lightSource.getL(p).normalize());
 			if (n.dotProduct(l) * n.dotProduct(v) > 0) {
-				Color lightIntensity = lightSource.getIntensity(p);
-				color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+				if (!occluded(l, p, geometry)) {
+					Color lightIntensity = lightSource.getIntensity(p);
+					color.add(calcDiffusive(kd, l, n, lightIntensity),
+							calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+				}
 			}
 		}
 
 		return color;
 	}
 
-	
-	/** Calculates the specular light
-	 * @param double ks
-	 * @param Vector l
-	 * @param Vector n
-	 * @param Vector v
-	 * @param int nShininess
-	 * @param Color lightIntensity
+	/**
+	 * Calculates the specular light
+	 * 
+	 * @param double
+	 *            ks
+	 * @param Vector
+	 *            l
+	 * @param Vector
+	 *            n
+	 * @param Vector
+	 *            v
+	 * @param int
+	 *            nShininess
+	 * @param Color
+	 *            lightIntensity
 	 * @return Color
 	 */
 	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-		Vector r = l.add(n.scale(-2*(l.dotProduct(n)))).normalize();// -2 or +2?
-		if(v.dotProduct(r) > 0)
-			return new Color(0,0,0);
-		return new Color(lightIntensity).scale(ks*Math.pow(Math.abs(r.dotProduct(v)), nShininess));
+		Vector r = l.add(n.scale(-2 * (l.dotProduct(n)))).normalize();// -2 or
+																		// +2?
+		if (v.dotProduct(r) > 0)
+			return new Color(0, 0, 0);
+		return new Color(lightIntensity).scale(ks * Math.pow(Math.abs(r.dotProduct(v)), nShininess));
 
 	}
 
-	
-	/** Calculates the diffusive light
-	 * @param double kd
-	 * @param Vector l
-	 * @param Vector n
-	 * @param Color lightIntensity
+	/**
+	 * Calculates the diffusive light
+	 * 
+	 * @param double
+	 *            kd
+	 * @param Vector
+	 *            l
+	 * @param Vector
+	 *            n
+	 * @param Color
+	 *            lightIntensity
 	 * @return Color
 	 */
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-		return new Color(lightIntensity).scale(kd*Math.abs(l.dotProduct(n)));
+		return new Color(lightIntensity).scale(kd * Math.abs(l.dotProduct(n)));
 	}
 
-	/** Finds the closest point on a geometry from list of points of ray intersection
-	 * @param Map<Geometry, List<Point3D>> 
+	/**
+	 * Finds the closest point on a geometry from list of points of ray
+	 * intersection
+	 * 
+	 * @param Map<Geometry,
+	 *            List<Point3D>>
 	 * @return Map<Geometry, Point3D>
 	 */
 	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> points) {
@@ -177,5 +200,15 @@ public class Render {
 		}
 
 		return closestPoint;
+	}
+
+	private boolean occluded(Vector l, Point3D point, Geometry geometry) {
+		Vector lightDirection = l.scale(-1); // from point to light source
+		Vector normal = geometry.getNormal(point);
+		Vector epsVector = normal.scale(normal.dotProduct(lightDirection) > 0 ? 2 : -2);
+		Point3D geometryPoint = point.add(epsVector);
+		Ray lightRay = new Ray(geometryPoint, lightDirection);
+		Map<Geometry, List<Point3D>> intersectionPoints = _scene.get_geometries().findIntersectionPoints(lightRay);
+		return !intersectionPoints.isEmpty();
 	}
 }

@@ -80,7 +80,7 @@ public class RenderTest {
 
 		Date date = new Date();
 
-		Scene scene = new Scene("Test scene1");
+		Scene scene = new Scene("Test scene directionalLight");
 		scene.set_camera(new Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, -1.0, 0.0), new Vector(0.0, 0.0, 1.0)));
 		scene.set_distance(350);
 		scene.set_background(new Color(0, 0, 0));
@@ -107,7 +107,7 @@ public class RenderTest {
 
 		Date date = new Date();
 
-		Scene scene = new Scene("Test scene2");
+		Scene scene = new Scene("Test scene pointLight");
 		scene.set_camera(new Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, 1.0, 0.0), new Vector(0.0, 0.0, -1.0)));
 		scene.set_distance(50);
 		scene.set_background(new Color(0, 0, 0));
@@ -134,7 +134,7 @@ public class RenderTest {
 
 		Date date = new Date();
 
-		Scene scene = new Scene("Test scene3");
+		Scene scene = new Scene("Test scene spotLight");
 		scene.set_camera(new Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, -1.0, 0.0), new Vector(0.0, 0.0, 1.0)));
 		scene.set_distance(350);
 		scene.set_background(new Color(0, 0, 0));
@@ -155,56 +155,34 @@ public class RenderTest {
 		render.printImage();
 
 		System.out.println(new Date().getTime() - date.getTime());
-
-		/*
-		 * Date date = new Date();
-		 * 
-		 * Scene scene = new Scene("Test scene3"); scene.set_camera(new
-		 * Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, 1.0, 0.0), new
-		 * Vector(0.0, 0.0, -1.0))); scene.set_distance(50);
-		 * scene.set_background(new Color(0, 0, 0)); Geometries geometries = new
-		 * Geometries(); scene.set_geometries(geometries);
-		 * scene.set_ambientLight(new AmbientLight(new Color(20, 20, 20), 0.1));
-		 * 
-		 * scene.get_lights().add(new SpotLight(new Point3D(-2,2,3), 1, 5, 5,
-		 * new Color(30,100,95), new Vector(2,-2,-30))); geometries.add(new
-		 * Sphere(50, new Point3D(0, 0, -50), new Color(0, 0, 70), new
-		 * Material(1, 2, 20)));
-		 * 
-		 * ImageWriter imageWriter = new ImageWriter("testspot", 500, 500, 500,
-		 * 500);
-		 * 
-		 * Render render = new Render(imageWriter, scene);
-		 * 
-		 * render.renderImage(); // render.printGrid(50); render.printImage();
-		 * 
-		 * System.out.println(new Date().getTime() - date.getTime());
-		 */
-		/*
-		 * Date date = new Date();
-		 * 
-		 * Scene scene = new Scene("Test scene3"); scene.set_camera(new
-		 * Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, -1.0, 0.0), new
-		 * Vector(0.0, 0.0, -1.0))); scene.set_distance(50);
-		 * scene.set_background(new Color(0, 0, 0)); Geometries geometries = new
-		 * Geometries(); scene.set_geometries(geometries);
-		 * scene.set_ambientLight(new AmbientLight(new Color(20,20,20), 0.1));
-		 * scene.get_lights().add(new SpotLight(new Point3D(-2,2,3), 1, 5, 5,
-		 * new Color(255,255,255), new Vector(2,-2,30)));
-		 * 
-		 * 
-		 * geometries.add(new Sphere(50, new Point3D(0, 0, -50), new Color(0, 0,
-		 * 70), new Material(1, 2, 20)));
-		 * 
-		 * ImageWriter imageWriter = new ImageWriter("testSpot", 500, 500, 500,
-		 * 500);
-		 * 
-		 * Render render = new Render(imageWriter, scene);
-		 * 
-		 * render.renderImage(); //render.printGrid(50); render.printImage();
-		 * 
-		 * System.out.println(new Date().getTime() - date.getTime());
-		 */
 	}
 
+	@Test
+	public void shadowRendering() {
+
+		Date date = new Date();
+
+		Scene scene = new Scene("Test scene shadow");
+		scene.set_camera(new Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, -1.0, 0.0), new Vector(0.0, 0.0, 1.0)));
+		scene.set_distance(350);
+		scene.set_background(new Color(0, 0, 0));
+		Geometries geometries = new Geometries();
+		scene.set_geometries(geometries);
+		scene.set_ambientLight(new AmbientLight());
+		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(0, 0, 70), new Material(1, 1, 12)));
+		Vector Dir = new Point3D(0, 0, 150).subtract(new Point3D(60, 60, 61));
+		scene.get_lights().add(new SpotLight(new Point3D(0, 0, 1), 1, 0.31, 0.7, new Color(100, 100, 100),
+				Dir.subtract(new Vector(9, 0, 3))));
+		
+
+		ImageWriter imageWriter = new ImageWriter("testShadow", 500, 500, 500, 500);
+
+		Render render = new Render(imageWriter, scene);
+
+		render.renderImage();
+		// render.printGrid(50);
+		render.printImage();
+
+		System.out.println(new Date().getTime() - date.getTime());
+	}
 }
