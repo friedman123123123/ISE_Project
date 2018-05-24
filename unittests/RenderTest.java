@@ -25,6 +25,7 @@ import primitives.Vector;
 import renderer.ImageWriter;
 import renderer.Render;
 import scene.Scene;
+import sun.nio.cs.MS1250;
 import sun.print.resources.serviceui;
 
 /**
@@ -33,49 +34,45 @@ import sun.print.resources.serviceui;
  */
 public class RenderTest {
 
-	/*
-	 * @Test public void basicRendering(){
-	 * 
-	 * Date date = new Date();
-	 * 
-	 * Scene scene = new Scene("Test scene"); scene.set_camera(new Camera(new
-	 * Point3D(0.0, 0.0, 0.0), new Vector(0.0, -1.0, 0.0), new Vector(0.0, 0.0,
-	 * 1.0))); scene.set_distance(150); scene.set_background(new Color(0, 0,
-	 * 0)); Geometries geometries = new Geometries();
-	 * scene.set_geometries(geometries); scene.set_ambientLight(new
-	 * AmbientLight());
-	 * 
-	 * 
-	 * 
-	 * geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(111,111,
-	 * 111), new Material(1, 0.8, 5)));
-	 * 
-	 * geometries.add(new Triangle(new Point3D( 100, 0, 149), new Point3D( 0,
-	 * 100, 149), new Point3D( 100, 100, 149), new Color(144,238,144), new
-	 * Material(1, 0.8, 5)));
-	 * 
-	 * geometries.add(new Triangle(new Point3D( 100, 0, 149), new Point3D( 0,
-	 * -100, 149), new Point3D( 100,-100, 149), new Color(205,92,92), new
-	 * Material(1, 0.8, 5)));
-	 * 
-	 * geometries.add(new Triangle(new Point3D(-100, 0, 149), new Point3D( 0,
-	 * 100, 149), new Point3D(-100, 100, 149), new Color(111,111, 111), new
-	 * Material(1, 0.8, 5)));
-	 * 
-	 * geometries.add(new Triangle(new Point3D(-100, 0, 149), new Point3D( 0,
-	 * -100, 149), new Point3D(-100, -100, 149), new Color(147,112,219), new
-	 * Material(1, 0.8, 5)));
-	 * 
-	 * ImageWriter imageWriter = new ImageWriter("test0", 500, 500, 500, 500);
-	 * 
-	 * Render render = new Render(imageWriter, scene);
-	 * 
-	 * render.renderImage(); render.printGrid(50); render.printImage();
-	 * 
-	 * System.out.println(new Date().getTime() - date.getTime()); }
-	 */
+/*	@Test
+	public void basicRendering() {
 
-	@Test
+		Date date = new Date();
+
+		Scene scene = new Scene("Test scene");
+		scene.set_camera(new Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, -1.0, 0.0), new Vector(0.0, 0.0, 1.0)));
+		scene.set_distance(150);
+		scene.set_background(new Color(0, 0, 0));
+		Geometries geometries = new Geometries();
+		scene.set_geometries(geometries);
+		scene.set_ambientLight(new AmbientLight());
+
+		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(111, 111, 111), new Material(1, 0.8, 5)));
+
+		geometries.add(new Triangle(new Point3D(100, 0, 149), new Point3D(0, 100, 149), new Point3D(100, 100, 149),
+				new Color(144, 238, 144), new Material(1, 0.8, 5)));
+
+		geometries.add(new Triangle(new Point3D(100, 0, 149), new Point3D(0, -100, 149), new Point3D(100, -100, 149),
+				new Color(205, 92, 92), new Material(1, 0.8, 5)));
+
+		geometries.add(new Triangle(new Point3D(-100, 0, 149), new Point3D(0, 100, 149), new Point3D(-100, 100, 149),
+				new Color(111, 111, 111), new Material(1, 0.8, 5)));
+
+		geometries.add(new Triangle(new Point3D(-100, 0, 149), new Point3D(0, -100, 149), new Point3D(-100, -100, 149),
+				new Color(147, 112, 219), new Material(1, 0.8, 5)));
+
+		ImageWriter imageWriter = new ImageWriter("test0", 500, 500, 500, 500);
+
+		Render render = new Render(imageWriter, scene);
+
+		render.renderImage();
+		//render.printGrid(50);
+		render.printImage();
+
+		System.out.println(new Date().getTime() - date.getTime());
+	}*/
+
+	/*@Test
 	public void directionalLightRendering() {
 
 		Date date = new Date();
@@ -96,27 +93,27 @@ public class RenderTest {
 		Render render = new Render(imageWriter, scene);
 
 		render.renderImage();
-		//render.printGrid(50);
+		// render.printGrid(50);
 		render.printImage();
 
 		System.out.println(new Date().getTime() - date.getTime());
-	}
+	}*/
 
-	@Test
+	/*@Test
 	public void pointLightRendering() {
 
 		Date date = new Date();
 
 		Scene scene = new Scene("Test scene pointLight");
 		scene.set_camera(new Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, 1.0, 0.0), new Vector(0.0, 0.0, -1.0)));
-		scene.set_distance(50);
+		scene.set_distance(120);
 		scene.set_background(new Color(0, 0, 0));
 		Geometries geometries = new Geometries();
 		scene.set_geometries(geometries);
 		scene.set_ambientLight(new AmbientLight(new Color(30, 30, 30), 1));
 
-		scene.get_lights().add(new PointLight(new Point3D(3, 0, 0), 1, 0, 0.1, new Color(0, 255, 0)));
-		geometries.add(new Sphere(8, new Point3D(0, 0, -10), new Color(200, 30, 70), new Material(0.8, 1, 20)));
+		scene.get_lights().add(new PointLight(new Point3D(3, 0, 0), 1, 0, 0.1, new Color(230, 200, 150)));
+		geometries.add(new Sphere(8, new Point3D(0, 0, -10), new Color(143, 60, 185), new Material(0.9, 1, 20)));
 
 		ImageWriter imageWriter = new ImageWriter("testPoint", 500, 500, 500, 500);
 
@@ -127,9 +124,9 @@ public class RenderTest {
 		render.printImage();
 
 		System.out.println(new Date().getTime() - date.getTime());
-	}
+	}*/
 
-	@Test
+	/*@Test
 	public void spotLightRendering() {
 
 		Date date = new Date();
@@ -143,7 +140,7 @@ public class RenderTest {
 		scene.set_ambientLight(new AmbientLight());
 		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(0, 0, 70), new Material(1, 1, 12)));
 		Vector Dir = new Point3D(0, 0, 150).subtract(new Point3D(60, 60, 61));
-		scene.get_lights().add(new SpotLight(new Point3D(0, 0, 1), 1, 0.31, 0.7, new Color(100, 100, 100),
+		scene.get_lights().add(new SpotLight(new Point3D(35, -15, 1), 1, 0.7, 0.4, new Color(100, 100, 100),
 				Dir.subtract(new Vector(9, 0, 3))));
 
 		ImageWriter imageWriter = new ImageWriter("testSpot", 500, 500, 500, 500);
@@ -155,9 +152,45 @@ public class RenderTest {
 		render.printImage();
 
 		System.out.println(new Date().getTime() - date.getTime());
-	}
+	}*/
 
 	@Test
+	public void trianglesLightRendering() {
+
+		Date date = new Date();
+
+		Scene scene = new Scene("Test scene pointLight with triangle");
+		scene.set_camera(new Camera(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, -1.0, 0.0), new Vector(0.0, 0.0, 1.0)));
+		scene.set_distance(150);
+		scene.set_background(new Color(0, 0, 0));
+		Geometries geometries = new Geometries();
+		scene.set_geometries(geometries);
+		scene.set_ambientLight(new AmbientLight(new Color(30, 30, 30), 1));
+
+		//scene.get_lights().add(new PointLight(new Point3D(0, 0, -1), 1, 0, 0.1, new Color(200, 80, 80)));
+		scene.get_lights().add(new PointLight(new Point3D(3, 0, 0), 1, 0, 0.1, new Color(230, 200, 150)));
+		//scene.get_lights().add(new DirectionalLight(new Vector(-1, 1, 1), new Color(230, 85, 90)));
+		
+	
+		//geometries.add(new Triangle(new Point3D(300, 300, 149), new Point3D(-180, -200, 180), new Point3D(200, -200, 180),
+			//	new Color(20, 20, 20), new Material(1, 0.8, 5)));
+		//geometries.add(new Triangle(new Point3D(297, 300, 149), new Point3D(-183, -200, 180), new Point3D(-200, 300, 149),
+			//	new Color(20, 20, 20), new Material(1, 0.8, 5)));
+		geometries.add(new Sphere(8, new Point3D(0, 0, -10), new Color(143, 60, 185), new Material(0.9, 1, 20)));
+
+	
+		ImageWriter imageWriter = new ImageWriter("testTrianglesPoint", 500, 500, 500, 500);
+
+		Render render = new Render(imageWriter, scene);
+
+		render.renderImage();
+		// render.printGrid(50);
+		render.printImage();
+
+		System.out.println(new Date().getTime() - date.getTime());
+	}
+
+/*	@Test
 	public void shadowRendering() {
 
 		Date date = new Date();
@@ -169,11 +202,10 @@ public class RenderTest {
 		Geometries geometries = new Geometries();
 		scene.set_geometries(geometries);
 		scene.set_ambientLight(new AmbientLight());
-		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(0, 0, 70), new Material(1, 1, 12)));
+		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(0, 0, 70), new Material(0.8, 0.3, 20)));
 		Vector Dir = new Point3D(0, 0, 150).subtract(new Point3D(60, 60, 61));
 		scene.get_lights().add(new SpotLight(new Point3D(0, 0, 1), 1, 0.31, 0.7, new Color(100, 100, 100),
 				Dir.subtract(new Vector(9, 0, 3))));
-		
 
 		ImageWriter imageWriter = new ImageWriter("testShadow", 500, 500, 500, 500);
 
@@ -184,5 +216,5 @@ public class RenderTest {
 		render.printImage();
 
 		System.out.println(new Date().getTime() - date.getTime());
-	}
+	}*/
 }
