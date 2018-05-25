@@ -3,7 +3,6 @@
  */
 package elements;
 
-import com.sun.jndi.url.dns.dnsURLContext;
 
 import primitives.Color;
 import primitives.Point3D;

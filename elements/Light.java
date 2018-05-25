@@ -3,7 +3,6 @@
  */
 package elements;
 
-import com.sun.accessibility.internal.resources.accessibility;
 
 import primitives.Color;
 

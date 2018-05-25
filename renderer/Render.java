@@ -16,7 +16,6 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import scene.Scene;
-import sun.management.counter.Variability;
 
 /**
  * @author Daniel & Yonathan
