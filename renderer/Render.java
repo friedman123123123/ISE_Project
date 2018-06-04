@@ -8,11 +8,15 @@ import java.util.Map.Entry;
 
 import org.junit.validator.PublicClassValidator;
 
+import com.sun.java_cup.internal.runtime.virtual_parse_stack;
+import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
+
 import elements.Light;
 import elements.LightSource;
 import primitives.Vector;
 import geometries.Geometry;
 import primitives.Color;
+import primitives.Coordinate;
 import primitives.Point3D;
 import primitives.Ray;
 import scene.Scene;
@@ -94,6 +98,10 @@ public class Render {
 
 	}
 
+	
+	private Color calcColor(GeoPoint geopoint, Ray inRay) {
+		calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, 1.0)
+	}
 	/**
 	 * Calculates the color
 	 * 
@@ -101,11 +109,15 @@ public class Render {
 	 * @param Point3D
 	 * @return Color
 	 */
-	private Color calcColor(Geometry geometry, Point3D p) {
+	private Color calcColor(Geometry geometry, Point3D p, Ray inRay, int level, double k) {
+		if (level == 0 || Coordinate.ZERO.equals(k))
+			return new Color(0, 0, 0);
+
 		Color color = new Color(_scene.get_ambientLight().getIntensity());
 		color = color.add(geometry.get_emission());
+		Vector v = inRay.get_direction();
 
-		Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();// normalize
+		//Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();// normalize
 		Vector n = geometry.getNormal(p);
 		int nShininess = geometry.get_material().get_nShininess();
 		double kd = geometry.get_material().get_Kd();
@@ -121,30 +133,36 @@ public class Render {
 				}
 			}
 		}
+		// Recursive call for a reflected ray
+		Ray reflectedRay = constructReflectedRay(n, p, inRay);
+		GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+		double kr = geometry.get_material().get_Kr();
+		Color reflectedLight = calcColor(reflectedPoint, reflectedRay, level–1, k*kr).scale(kr);
+		// Recursive call for a refracted ray
+		Ray refractedRay = constructRefractedRay(p, inRay);
+		GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+		double kt = geometry.get_material().get_Kt();
+		Color refractedLight = calcColor(refractedPoint, refractedRay , level–1, k*kt).scale(kt);
+		return color.add(reflectedLight, refractedLight);
 
+		
 		return color;
 	}
 
 	/**
 	 * Calculates the specular light
 	 * 
-	 * @param double
-	 *            ks
-	 * @param Vector
-	 *            l
-	 * @param Vector
-	 *            n
-	 * @param Vector
-	 *            v
-	 * @param int
-	 *            nShininess
-	 * @param Color
-	 *            lightIntensity
+	 * @param double ks
+	 * @param Vector l
+	 * @param Vector n
+	 * @param Vector v
+	 * @param int nShininess
+	 * @param Color lightIntensity
 	 * @return Color
 	 */
 	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-		Vector r = l.add(n.scale(-2 * (l.dotProduct(n)))).normalize();// -2 or
-																		// +2?
+		Vector r = l.add(n.scale(-2 * (l.dotProduct(n)))).normalize();
+		
 		if (v.dotProduct(r) > 0)
 			return new Color(0, 0, 0);
 		return new Color(lightIntensity).scale(ks * Math.pow(Math.abs(r.dotProduct(v)), nShininess));
@@ -154,20 +172,34 @@ public class Render {
 	/**
 	 * Calculates the diffusive light
 	 * 
-	 * @param double
-	 *            kd
-	 * @param Vector
-	 *            l
-	 * @param Vector
-	 *            n
-	 * @param Color
-	 *            lightIntensity
+	 * @param double kd
+	 * @param Vector l
+	 * @param Vector n
+	 * @param Color lightIntensity
 	 * @return Color
 	 */
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
 		return new Color(lightIntensity).scale(kd * Math.abs(l.dotProduct(n)));
 	}
 
+	/**
+	 * @param Vector n
+	 * @param Point3D p
+	 * @param Ray inRay
+	 * @return Ray
+	 */
+	private Ray constructReflectedRay(Vector n, Point3D p, Ray inRay) {
+		Vector v = inRay.get_direction();
+		Vector r = v.subtract(n.scale(2*(v.dotProduct(n)))).normalize();
+		return new Ray(p, r);
+	}
+	
+	private Ray constructRefractedRay(Point3D p, Ray inRay) {
+		Vector v = inRay.get_direction();
+		return new Ray(p, v);
+		//return new Ray(inRay);
+	}
+	
 	/**
 	 * Finds the closest point on a geometry from list of points of ray
 	 * intersection
