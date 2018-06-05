@@ -73,11 +73,13 @@ public class Sphere extends RadialGeometry {
 		}
 		double t1 = tm - th;
 		double t2 = tm + th;
-		if (t1 >= 0) {
+		Coordinate x = new Coordinate(t1);
+		Coordinate y = new Coordinate(t2);
+		if (x.get() > 0) {
 			Point3D p1 = p0.add(v.scale(t1));
 			pointsIntersections.add(p1);
 		}
-		if (t2 >= 0) {
+		if (y.get() > 0) {
 			Point3D p2 = p0.add(v.scale(t2));
 			pointsIntersections.add(p2);
 		}

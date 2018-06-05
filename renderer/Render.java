@@ -116,7 +116,7 @@ public class Render {
 			return new Color(0, 0, 0);
 
 		Color color = new Color(_scene.get_ambientLight().getIntensity());
-		color = color.add(geopoint.geometry.get_emission());
+		color = new Color(color.add(geopoint.geometry.get_emission()));
 		Vector v = inRay.get_direction();
 
 		// Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();//
