@@ -31,7 +31,7 @@ import scene.Scene;
  */
 public class RenderTest {
 
-	@Test
+	/*@Test
 	public void basicRendering() {
 
 		Date date = new Date();
@@ -44,19 +44,19 @@ public class RenderTest {
 		scene.set_geometries(geometries);
 		scene.set_ambientLight(new AmbientLight());
 
-		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(111, 111, 111), new Material(1, 0.8, 5)));
+		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(111, 111, 111), new Material(1, 0.8, 5, 0, 0)));
 
 		geometries.add(new Triangle(new Point3D(100, 0, 149), new Point3D(0, 100, 149), new Point3D(100, 100, 149),
-				new Color(144, 238, 144), new Material(1, 0.8, 5)));
+				new Color(144, 238, 144), new Material(1, 0.8, 5,0,0)));
 
 		geometries.add(new Triangle(new Point3D(100, 0, 149), new Point3D(0, -100, 149), new Point3D(100, -100, 149),
-				new Color(205, 92, 92), new Material(1, 0.8, 5)));
+				new Color(205, 92, 92), new Material(1, 0.8, 5,0,0)));
 
 		geometries.add(new Triangle(new Point3D(-100, 0, 149), new Point3D(0, 100, 149), new Point3D(-100, 100, 149),
-				new Color(111, 111, 111), new Material(1, 0.8, 5)));
+				new Color(111, 111, 111), new Material(1, 0.8, 5,0,0)));
 
 		geometries.add(new Triangle(new Point3D(-100, 0, 149), new Point3D(0, -100, 149), new Point3D(-100, -100, 149),
-				new Color(147, 112, 219), new Material(1, 0.8, 5)));
+				new Color(147, 112, 219), new Material(1, 0.8, 5,0,0)));
 
 		ImageWriter imageWriter = new ImageWriter("test0", 500, 500, 500, 500);
 
@@ -83,7 +83,7 @@ public class RenderTest {
 		scene.set_ambientLight(new AmbientLight());
 		scene.get_lights().add(new DirectionalLight(new Vector(-1, 1, 1), new Color(230, 85, 90)));
 
-		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(118, 90, 168), new Material(0.55, 0.95, 10)));
+		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(118, 90, 168), new Material(0.55, 0.95, 10,0,0)));
 
 		ImageWriter imageWriter = new ImageWriter("testDirectional", 500, 500, 500, 500);
 
@@ -110,7 +110,7 @@ public class RenderTest {
 		scene.set_ambientLight(new AmbientLight(new Color(30, 30, 30), 1));
 
 		scene.get_lights().add(new PointLight(new Point3D(3, 0, 0), 1, 0, 0.1, new Color(230, 200, 150)));
-		geometries.add(new Sphere(8, new Point3D(0, 0, -10), new Color(143, 60, 185), new Material(0.9, 1, 20)));
+		geometries.add(new Sphere(8, new Point3D(0, 0, -10), new Color(143, 60, 185), new Material(0.9, 1, 20,0,0)));
 
 		ImageWriter imageWriter = new ImageWriter("testPoint", 500, 500, 500, 500);
 
@@ -135,7 +135,7 @@ public class RenderTest {
 		Geometries geometries = new Geometries();
 		scene.set_geometries(geometries);
 		scene.set_ambientLight(new AmbientLight());
-		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(0, 0, 70), new Material(0.8, 0.7, 12)));
+		geometries.add(new Sphere(50, new Point3D(0, 0, 150), new Color(0, 0, 70), new Material(0.8, 0.7, 12,0,0)));
 		Vector Dir = new Point3D(0, 0, 150).subtract(new Point3D(60, 60, 61));
 		scene.get_lights().add(new SpotLight(new Point3D(35, -15, 1), 1, 0.7, 0.4, new Color(100, 100, 100),
 				Dir.subtract(new Vector(9, 0, 3))));
@@ -176,7 +176,7 @@ public class RenderTest {
 		// geometries.add(new Triangle(new Point3D(297, 300, 149), new Point3D(-183,
 		// -200, 180), new Point3D(-200, 300, 149),
 		// new Color(20, 20, 20), new Material(1, 0.8, 5)));
-		geometries.add(new Sphere(8, new Point3D(0, 0, -10), new Color(143, 60, 185), new Material(0.9, 1, 20)));
+		geometries.add(new Sphere(8, new Point3D(0, 0, -10), new Color(143, 60, 185), new Material(0.9, 1, 20,0,0)));
 
 		ImageWriter imageWriter = new ImageWriter("testTrianglesPoint", 500, 500, 500, 500);
 
@@ -189,7 +189,7 @@ public class RenderTest {
 		System.out.println(new Date().getTime() - date.getTime());
 	}
 
-	/*
+	
 	 * @Test public void shadowRendering() {
 	 * 
 	 * Date date = new Date();
@@ -222,11 +222,11 @@ public class RenderTest {
 		scene.set_ambientLight(new AmbientLight());
 
 		Geometries geometries = new Geometries();
-		Sphere sphere = new Sphere(60, new Point3D(0, 0, 80), new Color(0, 0, 70), new Material(0.9, 0.5, 30));
+		Sphere sphere = new Sphere(60, new Point3D(0, 0, 80), new Color(0, 0, 70), new Material(0.9, 0.5, 30,0,1));
 		Triangle triangle1 = new Triangle(new Point3D(-250, -250, 120), new Point3D(-250, 250, 120),
-				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100));
+				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100,0,0));
 		Triangle triangle2 = new Triangle(new Point3D(250, 250, 120), new Point3D(-250, 250, 120),
-				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100));
+				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100,0,0));
 
 		geometries.add(triangle1);
 		

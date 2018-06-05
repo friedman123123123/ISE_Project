@@ -11,21 +11,21 @@ public class Vector {
 	public Vector(Coordinate x, Coordinate y, Coordinate z) {
 		Point3D h = new Point3D(x, y, z);
 		if (Point3D.ZERO.equals(h))
-			throw new IllegalArgumentException("asdasdfsdf ");
+			throw new IllegalArgumentException("vector 0 ");
 		_head = h;
 	}
 
 	public Vector(double x, double y, double z) {
 		Point3D h = new Point3D(x, y, z);
 		if (Point3D.ZERO.equals(h))
-			throw new IllegalArgumentException("asdasdfsdf ");
+			throw new IllegalArgumentException("vector 0 ");
 		_head = h;
 	}
 
 	public Vector(Point3D p) {
 		Point3D h = new Point3D(p);
 		if (Point3D.ZERO.equals(h))
-			throw new IllegalArgumentException("asdasdfsdf ");
+			throw new IllegalArgumentException("vector 0 ");
 		_head = h;
 	}
 
