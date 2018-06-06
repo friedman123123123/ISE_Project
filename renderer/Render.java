@@ -133,7 +133,7 @@ public class Render {
 				if (!Coordinate.ZERO.equals(o * k)) {
 					Color lightIntensity = new Color(lightSource.getIntensity(geopoint.point)).scale(o);
 					color.add(calcDiffusive(kd, l, n, lightIntensity),
-						calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+						 calcSpecular(ks, l, n, v, nShininess, lightIntensity));
 				}
 			}
 		}
