@@ -227,11 +227,12 @@ public class RenderTest {
 				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100,0,0));
 		Triangle triangle2 = new Triangle(new Point3D(250, 250, 120), new Point3D(-250, 250, 120),
 				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100,0,0));
-
-		geometries.add(triangle1);
 		
 		geometries.add(sphere);
-		geometries.add(triangle2);
+		geometries.add(triangle1);
+		//geometries.add(triangle2);
+
+
 
 		scene.set_geometries(geometries);
 		List<LightSource> lights = new ArrayList<LightSource>();
