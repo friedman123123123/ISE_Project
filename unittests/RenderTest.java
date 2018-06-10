@@ -17,6 +17,7 @@ import elements.SpotLight;
 import geometries.Geometries;
 import geometries.Sphere;
 import geometries.Triangle;
+import javafx.scene.effect.Light.Spot;
 import primitives.Color;
 import primitives.Material;
 import primitives.Point3D;
@@ -222,20 +223,20 @@ public class RenderTest {
 		scene.set_ambientLight(new AmbientLight());
 
 		Geometries geometries = new Geometries();
-		Sphere sphere = new Sphere(60, new Point3D(0, 0, 80), new Color(0, 0, 70), new Material(0.9, 0.5, 30,0,1));
 		Triangle triangle1 = new Triangle(new Point3D(-250, -250, 120), new Point3D(-250, 250, 120),
 				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100,0,0));
 		Triangle triangle2 = new Triangle(new Point3D(250, 250, 120), new Point3D(-250, 250, 120),
 				new Point3D(250, -250, 120), new Color(0, 0, 0), new Material(0.9, 0.8, 100,0,0));
-
-		geometries.add(triangle1);
+		Sphere sphere = new Sphere(60, new Point3D(0, 0, 80), new Color(0, 0, 70), new Material(0.9, 0.5, 30,0,0));
 		
+		geometries.add(triangle1);
 		geometries.add(sphere);
 		geometries.add(triangle2);
 
 		scene.set_geometries(geometries);
 		List<LightSource> lights = new ArrayList<LightSource>();
-		lights.add(new SpotLight(new Point3D(50, -1, -12), 1, 0, 0.99, new Color(200, 200, 200), new Vector(-25, 0, 80)));
+		SpotLight spotLight = new SpotLight(new Point3D(50, -1, -32), 1, 0, 0.69, new Color(200, 200, 200), new Vector(-25, 0, 80));
+		lights.add(spotLight);
 		scene.set_lights(lights);
 
 		ImageWriter imageWriter = new ImageWriter("shadow test", 500, 500, 500, 500);

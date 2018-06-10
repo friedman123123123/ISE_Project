@@ -112,44 +112,48 @@ public class Render {
 	 * @return Color
 	 */
 	private Color calcColor(GeoPoint geopoint, Ray inRay, int level, double k) {
-		if (level == 0 || Coordinate.ZERO.equals(k))
+		if (level == 0 || Coordinate.ZERO.equals(k) || geopoint.geometry == null)
 			return new Color(0, 0, 0);
 
-		Color color = new Color(_scene.get_ambientLight().getIntensity());
-		color = new Color(color.add(geopoint.geometry.get_emission()));
-		Vector v = inRay.get_direction();
+			Color color = new Color(_scene.get_ambientLight().getIntensity());
+			color = new Color(color.add(geopoint.geometry.get_emission()));
 
-		// Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();//
-		// normalize
-		Vector n = geopoint.geometry.getNormal(geopoint.point);
-		int nShininess = geopoint.geometry.get_material().get_nShininess();
-		double kd = geopoint.geometry.get_material().get_Kd();
-		double ks = geopoint.geometry.get_material().get_Ks();
+			Vector v = inRay.get_direction();
 
-		for (LightSource lightSource : _scene.get_lights()) {
-			Vector l = new Vector(lightSource.getL(geopoint.point).normalize());
-			if (n.dotProduct(l) * n.dotProduct(v) > 0) {
-				double o = occluded(l, geopoint);
-				if (!Coordinate.ZERO.equals(o * k)) {
-					Color lightIntensity = new Color(lightSource.getIntensity(geopoint.point)).scale(o);
-					color.add(calcDiffusive(kd, l, n, lightIntensity),
-						 calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+			// Vector v =
+			// p.subtract(_scene.get_camera().get_p0()).normalize();//
+			// normalize
+			Vector n = geopoint.geometry.getNormal(geopoint.point);
+			int nShininess = geopoint.geometry.get_material().get_nShininess();
+			double kd = geopoint.geometry.get_material().get_Kd();
+			double ks = geopoint.geometry.get_material().get_Ks();
+
+			for (LightSource lightSource : _scene.get_lights()) {
+				Vector l = new Vector(lightSource.getL(geopoint.point).normalize());
+				if (n.dotProduct(l) * n.dotProduct(v) > 0) {
+					double o = occluded(l, geopoint);
+					if (!Coordinate.ZERO.equals(o * k)) {
+						Color lightIntensity = new Color(lightSource.getIntensity(geopoint.point)).scale(o);
+						color.add(calcDiffusive(kd, l, n, lightIntensity),
+								calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+					}
 				}
 			}
-		}
 
-		// Recursive call for a reflected ray
-		Ray reflectedRay = constructReflectedRay(n, geopoint.point, inRay);
-		GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
-		double kr = geopoint.geometry.get_material().get_Kr();
-		Color reflectedLight = calcColor(reflectedPoint, reflectedRay, level - 1, k * kr).scale(kr);
-		// Recursive call for a refracted ray
-		Ray refractedRay = constructRefractedRay(geopoint.point, inRay);
-		GeoPoint refractedPoint = findClosestIntersection(refractedRay);
-		double kt = geopoint.geometry.get_material().get_Kt();
-		Color refractedLight = calcColor(refractedPoint, refractedRay, level - 1, k * kt).scale(kt);
-		return color.add(reflectedLight, refractedLight);
-	}
+			// Recursive call for a reflected ray
+			Ray reflectedRay = constructReflectedRay(n, geopoint.point, inRay);
+			GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+			double kr = geopoint.geometry.get_material().get_Kr();
+			Color reflectedLight = calcColor(reflectedPoint, reflectedRay, level - 1, k * kr).scale(kr);
+			// Recursive call for a refracted ray
+			Ray refractedRay = constructRefractedRay(geopoint.point, inRay);
+			GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+			double kt = geopoint.geometry.get_material().get_Kt();
+			Color refractedLight = calcColor(refractedPoint, refractedRay, level - 1, k * kt).scale(kt);
+			return color.add(reflectedLight, refractedLight);
+		}
+		
+
 
 	/**
 	 * Calculates the specular light
@@ -264,10 +268,10 @@ public class Render {
 		Point3D geometryPoint = geopoint.point.add(epsVector);
 		Ray lightRay = new Ray(geometryPoint, lightDirection);
 		Map<Geometry, List<Point3D>> intersectionPoints = _scene.get_geometries().findIntersectionPoints(lightRay);
-		
+
 		double shadowK = 1;
 		for (Map.Entry<Geometry, List<Point3D>> entry : intersectionPoints.entrySet())
-		shadowK *= entry.getKey().get_material().get_Kt();
+			shadowK *= entry.getKey().get_material().get_Kt();
 		return shadowK;
 	}
 }

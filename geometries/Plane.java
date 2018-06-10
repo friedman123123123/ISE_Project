@@ -3,6 +3,7 @@ package geometries;
 import java.util.*;
 
 import primitives.Color;
+import primitives.Coordinate;
 import primitives.Material;
 import primitives.Point3D;
 import primitives.Ray;
@@ -81,7 +82,8 @@ public class Plane extends Geometry {
 		double t = n.dotProduct(v) / n.dotProduct(d);
 		d.normalize();
 		Point3D p;
-		if (t > 0) {
+		Coordinate x = new Coordinate(t);
+		if (x.get() > 0) {
 			p = new Point3D(p0.add(d.scale(t)));
 			pointsIntersections.add(p);
 			findIntersections.put(this, pointsIntersections);

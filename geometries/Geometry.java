@@ -34,7 +34,7 @@ public abstract class Geometry {
 
 	/************** Getters/Setters *******/
 	public Color get_emission() {
-		return _emission;
+		return new Color(_emission);
 	}
 	
 	public Material get_material() {

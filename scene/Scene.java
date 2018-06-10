@@ -5,7 +5,9 @@ import java.util.List;
 
 import elements.AmbientLight;
 import elements.Camera;
+import elements.Light;
 import elements.LightSource;
+import elements.SpotLight;
 import geometries.Geometries;
 import geometries.Geometry;
 import primitives.Color;
@@ -27,6 +29,7 @@ public class Scene {
 	public Scene(String name) {
 		_name = name;
 		_lights = new ArrayList<LightSource>();
+		_geometries = new Geometries();
 	}
 
 	/************** Getters/Setters *******/
@@ -92,6 +95,5 @@ public class Scene {
 	public void addGeometry(Geometry g){
 		_geometries.add(g);
 	}
-	
 	
 }
