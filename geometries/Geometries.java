@@ -36,6 +36,7 @@ public class Geometries extends Geometry {
 			intersections = map.get(g);
 			if (intersections != null) {
 				if (!intersections.isEmpty()){
+					pointsIntersections.clear();
 					pointsIntersections.addAll(intersections);
 					findIntersections.put(g, pointsIntersections);
 				}

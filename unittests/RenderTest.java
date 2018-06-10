@@ -230,8 +230,8 @@ public class RenderTest {
 		Sphere sphere = new Sphere(60, new Point3D(0, 0, 80), new Color(0, 0, 70), new Material(0.9, 0.5, 30,0,0));
 		
 		geometries.add(triangle1);
-		geometries.add(sphere);
 		geometries.add(triangle2);
+		geometries.add(sphere);
 
 		scene.set_geometries(geometries);
 		List<LightSource> lights = new ArrayList<LightSource>();
