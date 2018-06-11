@@ -8,9 +8,6 @@ import java.util.Map.Entry;
 
 import org.junit.validator.PublicClassValidator;
 
-import com.sun.java_cup.internal.runtime.virtual_parse_stack;
-import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
-
 import elements.Light;
 import elements.LightSource;
 import primitives.Vector;
@@ -101,7 +98,7 @@ public class Render {
 	}
 
 	private Color calcColor(GeoPoint geopoint, Ray inRay) {
-		return calcColor(geopoint, inRay, 3, 1.0);
+		return calcColor(geopoint, inRay, 2, 1.0);
 	}
 
 	/**
@@ -117,6 +114,7 @@ public class Render {
 
 			Color color = new Color(_scene.get_ambientLight().getIntensity());
 			color = new Color(color.add(geopoint.geometry.get_emission()));
+
 
 			Vector v = inRay.get_direction();
 
