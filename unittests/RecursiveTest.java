@@ -99,6 +99,12 @@ public class RecursiveTest {
 		scene.set_distance(300);
 		scene.set_background(new Color(0, 0, 0));
 		scene.set_ambientLight(new AmbientLight());
+		
+		Sphere sphere = new Sphere(300, new Point3D(0, 0, -1500), new Color(0, 0, 100), new Material(0.5, 0.3, 10, 0, 0.5));
+		scene.addGeometry(sphere);
+
+		Sphere sphere2 = new Sphere(150, new Point3D(0, 0, -1500), new Color(100, 20, 20), new Material(0.4, 0.6, 10, 0.5, 0));
+		scene.addGeometry(sphere2);
 
 		Triangle triangle = new Triangle(new Point3D(2000, -1000, -2000), new Point3D(-1000, 2000, -2000),
 				new Point3D(700, 700, -875), new Color(20, 20, 20), new Material(0.5, 0.3, 10, 1, 0));
@@ -107,12 +113,6 @@ public class RecursiveTest {
 				new Point3D(-1000, -1000, -2000), new Color(20, 20, 20), new Material(0.55, 0.25, 10, 0.5, 0));
 
 		scene.addGeometry(triangle);
-		
-		Sphere sphere = new Sphere(300, new Point3D(0, 0, -1500), new Color(0, 0, 100), new Material(0.5, 0.3, 10, 0, 0.5));
-		scene.addGeometry(sphere);
-
-		Sphere sphere2 = new Sphere(150, new Point3D(0, 0, -1500), new Color(100, 20, 20), new Material(0.4, 0.6, 10, 0.5, 0));
-		scene.addGeometry(sphere2);
 		
 		scene.addGeometry(triangle2);
 

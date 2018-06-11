@@ -29,7 +29,7 @@ public class Geometries extends Geometry {
 	
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r) {
-		findIntersections = new HashMap<Geometry, List<Point3D>>();
+		/*findIntersections = new HashMap<Geometry, List<Point3D>>();
 		pointsIntersections = new ArrayList<Point3D>();
 		List<Point3D> intersections = new ArrayList<Point3D>();
 		Map<Geometry, List<Point3D>> map = new HashMap<Geometry, List<Point3D>>();
@@ -44,7 +44,19 @@ public class Geometries extends Geometry {
 				}
 			}
 		}
-		return findIntersections;
+		return findIntersections;*/
+		
+		Map<Geometry, List<Point3D>> intersectionPoints = new HashMap<Geometry, List<Point3D>>();
+		for (Geometry geometry : geometriesList) {
+			Map<Geometry, List<Point3D>> geometryIntersectionPoints = new HashMap<Geometry, List<Point3D>>(
+					geometry.findIntersectionPoints(r));
+
+			geometryIntersectionPoints.forEach((g, list) -> {
+				if (list.size() > 0)
+					intersectionPoints.put(g, list);
+			});
+		}
+		return intersectionPoints;
 	}
 
 }
