@@ -27,6 +27,7 @@ public class Geometries extends Geometry {
 
 	
 	
+	
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r) {
 		findIntersections = new HashMap<Geometry, List<Point3D>>();
