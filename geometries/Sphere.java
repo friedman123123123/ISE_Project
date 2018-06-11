@@ -74,7 +74,7 @@ public class Sphere extends RadialGeometry {
 		double t1 = tm - th;
 		double t2 = tm + th;
 		Coordinate x = new Coordinate(t1);
-		Coordinate y = new Coordinate(t2);
+		Coordinate y = new Coordinate(t2);	
 		if (x.get() > 0) {
 			Point3D p1 = p0.add(v.scale(t1));
 			pointsIntersections.add(p1);
