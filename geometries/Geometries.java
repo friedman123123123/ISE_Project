@@ -24,7 +24,6 @@ public class Geometries extends Geometry {
 	public Vector getNormal(Point3D p) {
 		return null;
 	}
-
 	
 	
 	
