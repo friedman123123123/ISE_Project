@@ -98,7 +98,7 @@ public class Render {
 	}
 
 	private Color calcColor(GeoPoint geopoint, Ray inRay) {
-		return calcColor(geopoint, inRay, 100, 1.0);
+		return calcColor(geopoint, inRay, 3, 1.0);
 	}
 
 	/**

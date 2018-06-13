@@ -130,4 +130,28 @@ public class RecursiveTest {
 		render.printImage();
 
 	}
+	@Test
+	public void billTest() {
+		Scene scene = new Scene("bill");
+		scene.set_camera(new Camera(new Point3D(0, 0, 0), new Vector(0, -1, 0), new Vector(0, 0, 1)));
+		scene.set_distance(100);
+		scene.set_background(new Color(165, 42, 42));
+		scene.set_ambientLight(new AmbientLight());
+
+		Geometries geometries = new Geometries();
+		Plane plane1 = new Plane(new Point3D(0,0,0), new Vector(2,9,6), new Color(0,100,0), new Material(0.5, 0.5, 8, 0, 1));
+
+		scene.set_geometries(geometries);
+		List<LightSource> lights = new ArrayList<LightSource>();
+		SpotLight spotLight = new SpotLight(new Point3D(50, -1, -32), 1, 0, 0.69, new Color(200, 200, 200), new Vector(-25, 0, 80));
+		lights.add(spotLight);
+		scene.set_lights(lights);
+
+		ImageWriter imageWriter = new ImageWriter("bill test", 500, 500, 500, 500);
+		Render testRender = new Render(imageWriter, scene);
+
+		testRender.renderImage();
+		testRender.printImage();
+
+	}
 }
