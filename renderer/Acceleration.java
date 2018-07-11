@@ -501,6 +501,7 @@ public class Acceleration {
 		return result;
 	}
 
+	/***************** Admin ********************/
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
