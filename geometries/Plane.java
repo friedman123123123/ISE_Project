@@ -59,8 +59,6 @@ public class Plane extends Geometry {
 		return new Vector(_normal);
 	}
 
-	/*************** Admin *****************/
-
 	/************** Operations ***************/
 
 	/**

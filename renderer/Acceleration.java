@@ -29,7 +29,7 @@ import sun.net.www.content.audio.x_aiff;
 public class Acceleration {
 	// for every index (cell in the grid) stores a list of geometries in this
 	// cell
-	private Map<Point3D, List<Geometry>> grid = new HashMap<Point3D, List<Geometry>>();
+	private Map<Point3D, Geometries> grid = new HashMap<Point3D, Geometries>();
 
 	private double Nx, Ny, Nz; // grid resolution in each side of the cube (how
 								// many squares in each height/width/depth)
@@ -67,22 +67,28 @@ public class Acceleration {
 		_dz = gridMaxZ - gridMinZ + 1;
 
 		// Nx = dx * cubeSqrt(lambda * N / V)
-		
+
 		// this formula tries to establish some relation between the dimension
 		// of the scene, the number of primitive it contains and the overall
 		// volume of the scene. The parameter lambda is a user defined parameter
 		// which allows to fine tweak the performance of the algorithm.
-		
+
 		// It has been showed that the grid acceleration structure gives optimum
-		// results for values of lambda between 3 and 5 ("Ray Tracing Animated Scenes
-		// using Coherent Grid Traversal", Wald et al. 2006). therefore lambda = 4
+		// results for values of lambda between 3 and 5 ("Ray Tracing Animated
+		// Scenes
+		// using Coherent Grid Traversal", Wald et al. 2006). therefore lambda =
+		// 4
 		double cubeRoot = Math.pow(4 * scene.get_geometries().countGeometries() / volume(scene), 1.0 / 3.0);
 
 		Nx = Math.floor(_dx * cubeRoot);
 		Ny = Math.floor(_dy * cubeRoot);
 		Nz = Math.floor(_dz * cubeRoot);
 
-		// if the resolution Nx < 1 then since it cannot be smaller then 1, we 
+		// if the resolution < 1 then since it cannot be smaller than 1,
+		// we change its value to 1 if so
+		// and to keep track we don't get to big values
+		// we also put an upper boundary
+		
 		if (Nx < 1)
 			Nx = 1;
 		else if (Nx > 128)
@@ -119,6 +125,8 @@ public class Acceleration {
 		// found the cell/s it belongs to
 		for (Geometry geometry : scene.get_geometries().getGeometriesList()) {
 
+			// to convert the minimum of each geometry
+			// in regards of the minimum of the grid
 			double minX = Math.floor((geometry.get_xMin() - gridMinX) / _cellSizeX);
 			double minY = Math.floor((geometry.get_yMin() - gridMinY) / _cellSizeY);
 			double minZ = Math.floor((geometry.get_zMin() - gridMinZ) / _cellSizeZ);
@@ -127,13 +135,11 @@ public class Acceleration {
 			double cellMinY = pmalc(minY, 0, Ny - 1);
 			double cellMinZ = pmalc(minZ, 0, Nz - 1);
 
-			Point3D cellMin = new Point3D(cellMinX, cellMinY, cellMinZ); // minimum
-																			// point
-																			// of
-																			// the
-																			// grid
-			// Point3D cellMin = new Point3D(minX, minY, minZ);
+			// minimum point of the grid
+			Point3D cellMin = new Point3D(cellMinX, cellMinY, cellMinZ);
 
+			// to convert the maximum of each geometry
+			// in regards of the maximum of the grid
 			double maxX = Math.floor((geometry.get_xMax() - gridMinX) / _cellSizeX);
 			double maxY = Math.floor((geometry.get_yMax() - gridMinY) / _cellSizeY);
 			double maxZ = Math.floor((geometry.get_zMax() - gridMinZ) / _cellSizeZ);
@@ -142,26 +148,22 @@ public class Acceleration {
 			double cellMaxY = pmalc(maxY, 0, Ny - 1);
 			double cellMaxZ = pmalc(maxZ, 0, Nz - 1);
 
-			Point3D cellMax = new Point3D(cellMaxX, cellMaxY, cellMaxZ); // maximum
-																			// point
-																			// of
-																			// the
-																			// grid
-			// Point3D cellMax = new Point3D(maxX, maxY, maxZ);
+			// maximum point of the grid
+			Point3D cellMax = new Point3D(cellMaxX, cellMaxY, cellMaxZ);
 
-			// is it ++z?
 			// inserts every geometry to every cell
 			for (double z = cellMin.getZ().get(); z <= cellMax.getZ().get(); ++z)
 				for (double y = cellMin.getY().get(); y <= cellMax.getY().get(); ++y)
 					for (double x = cellMin.getX().get(); x <= cellMax.getX().get(); ++x) {
+
 						// since the class Geometries has already an
 						// implementation of a list of geometries, we can just
 						// use this form
-						List<Geometry> cell = new ArrayList<Geometry>();
+						Geometries cell = new Geometries();
+
 						// the key of the map will be the index - the cell in
 						// which the geometry is stored
 						Point3D p = new Point3D(x, y, z);
-						boolean g = grid.containsKey(p);
 						if (grid.containsKey(p))
 							cell = grid.get(p);
 						cell.add(geometry);
@@ -171,33 +173,49 @@ public class Acceleration {
 	}
 
 	/**
-	 * the function which founds the closest intersection with the ray
+	 * the function which founds the closest intersection with the ray and does
+	 * the acceleration instead of trying every geometry in scene with every ray
+	 * we try only specific geometries with specific rays which accelerate the
+	 * program using the 3DDDA algorithm
 	 * 
 	 * @param r
 	 * @return Map<Geometry, Point3D>
 	 */
 	public Map<Geometry, Point3D> intersect(Ray r) {
+		// since we only know to cooperate with rays that intersect the grid,
+		// we will advance the ray if its not intersecting the grid
 		Map<Geometry, Point3D> tHitPoint = new HashMap<Geometry, Point3D>();
 
+		// using similar triangles, we use the x/y/z components
+		// to find the distance to the next intersection
 		double Rx = r.get_direction().getHead().getX().get();
 		double Ry = r.get_direction().getHead().getY().get();
 		double Rz = r.get_direction().getHead().getZ().get();
 
+		// call a function which advance the ray to the grid
+		// and if the is no intersection, returns -1
 		double BBoxInter = BBoxIntersect(r, Rx, Ry, Rz);
-		if (BBoxInter == -1) // if the ray doesnt intersect the grid
+		if (BBoxInter == -1) // if the ray doesn't intersect the grid
 			return tHitPoint;
 
-		// if the ray doesn't intersect the grid return
-		// if (!bbox.intersect(r)) return false;
+		// to know how much the ray has to advance in the grid every time,
+		// we will take the minimal distance it has to pass to achievce the next
+		// grid
+		// via choosing the smallest of the x/y/z components
 		double t_x, t_y, t_z;
 		double deltaTx, deltaTy, deltaTz;
-		double x, y, z;
-		// if (r.get_p00().getX().get() < gridMinX)
-		// x =
+
+		// to convert the position of the origin of the ray in regards to the
+		// minimum of the grid
+		// which we do by subtracting the grid minimum extent to the ray's first
+		// intersection with the grid.
 		double Ogridx = r.get_p00().getX().get() + r.get_direction().scale(BBoxInter).getHead().getX().get() - gridMinX;
 		double Ogridy = r.get_p00().getY().get() + r.get_direction().scale(BBoxInter).getHead().getY().get() - gridMinY;
 		double Ogridz = r.get_p00().getZ().get() + r.get_direction().scale(BBoxInter).getHead().getZ().get() - gridMinZ;
 
+		// we "normalize" Ogrid by dividing it with the cell's dimensions.
+		// the resulting value corresponds to the position of the origin of the
+		// ray in terms of number of cells.
 		double Ocellx = Ogridx / _cellSizeX;
 		double Ocelly = Ogridy / _cellSizeY;
 		double Ocellz = Ogridz / _cellSizeZ;
@@ -233,38 +251,44 @@ public class Acceleration {
 			t_z = ((Math.floor(Ocellz) + 1) * _cellSizeZ - Ogridz) / Rz;
 		}
 
+		// to find where to store the geometry in the HashMap
+		// we will use the index of the cell/s it is in as the key of it's value
+		// to do that, we just take the floor value of Ocell,
+		// since it's referring to the cell we're in.
 		double indexX = (double) Math.floor(Ocellx);
 		double indexY = (double) Math.floor(Ocelly);
 		double indexZ = (double) Math.floor(Ocellz);
 		Point3D index;
+
+		// the distance to the next cell
 		double tNextCrossing;
-		double tHit = Double.MAX_VALUE; // maybe should be inside the loop so
-										// every loop it's reinitialized
-		boolean t = true;
+		// the distance from the beginning of a cell to an intersection with a
+		// geometry
+		double tHit = Double.MAX_VALUE;
+		// boolean t = true;
+
 		// Loops until an intersection is found or we left the grid
-		while (t) {
-			// intersect |= cell[cellIndex[0]][cellIndex[1]]->intersect(r,
-			// tHit);
+		while (true) {
 			index = new Point3D(indexX, indexY, indexZ);
 			Map<Geometry, List<Point3D>> intersectionsPoints = new HashMap<Geometry, List<Point3D>>();
+
+			// if the index (this key) exists in the HashMap
 			if (grid.get(index) != null) {
 				// since we already implemented a type that loop over a list of
 				// geometries (in Geometries) we don't have to do it again
 				// we just create the grid (in line 29) of type HashMap<Point3D,
 				// Geometries>.
+				intersectionsPoints = new HashMap<Geometry, List<Point3D>>(grid.get(index).findIntersectionPoints(r));
 
-				// intersectionsPoints = new HashMap<Geometry,
-				// List<Point3D>>(grid.get(index).findIntersectionPoints(r));
-
-				for (Geometry geometry : grid.get(index)) {
-					Map<Geometry, List<Point3D>> geometryIntersectionPoints = new HashMap<Geometry, List<Point3D>>(
-							geometry.findIntersectionPoints(r));
-
-					geometryIntersectionPoints.forEach((g, list) -> {
-						if (list.size() > 0)
-							intersectionsPoints.put(g, list);
-					});
-				}
+				/*
+				 * for (Geometry geometry : grid.get(index)) { Map<Geometry,
+				 * List<Point3D>> geometryIntersectionPoints = new
+				 * HashMap<Geometry, List<Point3D>>(
+				 * geometry.findIntersectionPoints(r));
+				 * 
+				 * geometryIntersectionPoints.forEach((g, list) -> { if
+				 * (list.size() > 0) intersectionsPoints.put(g, list); }); }
+				 */
 
 				// we put the returned value as "new" because the function
 				// doesn't return a new object
@@ -272,6 +296,9 @@ public class Acceleration {
 				if (!tHitPoint.values().isEmpty())
 					tHit = index.distance((Point3D) tHitPoint.values().toArray()[0]);
 			}
+
+			// searches the smallest distance to the next cell
+
 			if (t_x < t_y && t_x < t_z) {
 				tNextCrossing = t_x; // current t, next intersection with
 										// cell along ray
@@ -300,6 +327,7 @@ public class Acceleration {
 				else
 					indexZ += 1;
 			}
+			
 			// if we have intersected geometry and tHit < tNextCrossing
 			// break
 			if (tHit < tNextCrossing)
@@ -313,10 +341,21 @@ public class Acceleration {
 	}
 
 	/************** Helpers ***************/
+	/**
+	 * @param scene
+	 * @return double
+	 */
 	private double volume(Scene scene) {
 		return _dx * _dy * _dz;
 	}
 
+	
+	/**
+	 * finds the (first) closest (point) intersection of the ray with the grid
+	 * @param points
+	 * @param index
+	 * @return Map<Geometry, Point3D>
+	 */
 	private Map<Geometry, Point3D> getTHitPoint(Map<Geometry, List<Point3D>> points, Point3D index) {
 		double minDistance = Double.MAX_VALUE;
 		Point3D minp = index;
@@ -336,14 +375,11 @@ public class Acceleration {
 				}
 			}
 		}
-		// tHit = Math.sqrt(minDistance); // first option to check if doesnt
-		// work!!!!!!!!!
 		return closestPoint;
 	}
 
 	/**
-	 * finds the distance
-	 * 
+	 * finds the distance of the first intersection of the ray with the grid
 	 * @param Ray
 	 * @param double
 	 * @param double
@@ -352,9 +388,15 @@ public class Acceleration {
 	 */
 	private double BBoxIntersect(Ray r, double Rx, double Ry, double Rz) {
 
+		// to know in which direction are the rays
+		// we check for every component (x/y/z) of the ray whether it is smaller then 0 or not
 		Point3D sign = new Point3D((Rx < 0) ? 1 : 0, (Ry < 0) ? 1 : 0, (Rz < 0) ? 1 : 0);
 
+		// minimum and maximum distances from the ray beginning
+		// to the minimum and maximum of the grid
 		double tmin, tmax, tymin, tymax, tzmin, tzmax;
+		
+		// if the sign is positive
 		if (sign.getX().get() == 0) {
 			tmin = (gridMinX - r.get_p00().getX().get()) / Rx;
 			tmax = (gridMaxX - r.get_p00().getX().get()) / Rx;
@@ -363,6 +405,7 @@ public class Acceleration {
 			tmax = (gridMinX - r.get_p00().getX().get()) / Rx;
 		}
 
+		// if the sign is positive
 		if (sign.getY().get() == 0) {
 			tymin = (gridMinY - r.get_p00().getY().get()) / Ry;
 			tymax = (gridMaxY - r.get_p00().getY().get()) / Ry;
@@ -371,14 +414,18 @@ public class Acceleration {
 			tymax = (gridMinY - r.get_p00().getY().get()) / Ry;
 		}
 
+		// if the minimum value of one component is bigger then the maximum of another one
+		// or in the opposite way, return -1
 		if ((tmin > tymax) || (tymin > tmax))
 			return -1;
 
+		// find the minimum and maximum distance to the minimum and maximum of the grid
 		if (tymin > tmin)
 			tmin = tymin;
 		if (tymax < tmax)
 			tmax = tymax;
 
+		// if the sign is positive
 		if (sign.getZ().get() == 0) {
 			tzmin = (gridMinZ - r.get_p00().getZ().get()) / Rz;
 			tzmax = (gridMaxZ - r.get_p00().getZ().get()) / Rz;
@@ -387,9 +434,12 @@ public class Acceleration {
 			tzmax = (gridMinZ - r.get_p00().getZ().get()) / Rz;
 		}
 
+		// if the minimum value of one component is bigger then the maximum of another one
+		// or in the opposite way, return -1
 		if ((tmin > tzmax) || (tzmin > tmax))
 			return -1;
 
+		// find the minimum and maximum distance to the minimum and maximum of the grid
 		if (tzmin > tmin)
 			tmin = tzmin;
 		if (tzmax < tmax)
@@ -398,15 +448,20 @@ public class Acceleration {
 		return tmin;
 	}
 
+	/**
+	 * since we want to be sure we don't pass minimal value
+	 * we take the maximum between our minimal value
+	 * and the minimum between two other ones (to be sure that even their minimum is bigger than the minimal value)
+	 * @param h
+	 * @param low
+	 * @param high
+	 * @return
+	 */
 	private double pmalc(double h, double low, double high) {
 		return Math.max(low, Math.min(h, high));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
+	/*************** Admin *****************/
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -446,11 +501,6 @@ public class Acceleration {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
