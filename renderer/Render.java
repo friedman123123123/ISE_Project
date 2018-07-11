@@ -74,6 +74,9 @@ public class Render {
 		_imageWriter.writeToimage();
 	}
 
+	/**
+	 * Rendering the image
+	 */
 	public void renderImage() {
 		for (int i = 0; i < _imageWriter.getNx(); i++) {
 			for (int j = 0; j < _imageWriter.getNy(); j++) {
@@ -102,6 +105,9 @@ public class Render {
 
 	}
 	
+	/**
+	 * Rendering the image with acceleration
+	 */
 	public void renderImage2() {
 		for (int i = 0; i < _imageWriter.getNx(); i++) {
 			for (int j = 0; j < _imageWriter.getNy(); j++) {
@@ -122,6 +128,11 @@ public class Render {
 
 	}
 
+	/**
+	 * @param Geopoint
+	 * @param Ray
+	 * @return Color
+	 */
 	private Color calcColor(GeoPoint geopoint, Ray inRay) {
 		return calcColor(geopoint, inRay, 3, 1.0);
 	}
@@ -234,6 +245,11 @@ public class Render {
 		return new Ray(p, r);
 	}
 
+	/**
+	 * @param Point3D
+	 * @param Ray
+	 * @return Ray
+	 */
 	private Ray constructRefractedRay(Point3D p, Ray inRay) {
 		Vector v = inRay.get_direction();
 		return new Ray(p, v);
@@ -275,6 +291,10 @@ public class Render {
 		return closestPoint;
 	}
 
+	/**
+	 * @param Ray
+	 * @return GeoPoint
+	 */
 	private GeoPoint findClosestIntersection(Ray ray) {
 		Map<Geometry, List<Point3D>> intersections = new HashMap<Geometry, List<Point3D>>(
 				_scene.get_geometries().findIntersectionPoints(ray));
@@ -282,6 +302,11 @@ public class Render {
 		return closestIntersection;
 	}
 
+	/**
+	 * @param Vector
+	 * @param GeoPoint
+	 * @return double
+	 */
 	private double occluded(Vector l, GeoPoint geopoint) {
 		Vector lightDirection = l.scale(-1); // from point to light source
 		Vector normal = geopoint.geometry.getNormal(geopoint.point);

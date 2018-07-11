@@ -63,12 +63,20 @@ public class Plane extends Geometry {
 
 	/************** Operations ***************/
 
+	/**
+	 * @param Ray
+	 * @return Map<Geometry, List<Point3D>>
+	 */
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r) {
 		findIntersections = new HashMap<Geometry, List<Point3D>>();
 		pointsIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		Point3D q0 = new Point3D(_p);
+		if(p0.equals(q0)) {
+			return findIntersections;
+		}
+		
 		Vector n = new Vector(_normal);
 		Vector d = new Vector(r.get_direction());
 		Vector v = new Vector(q0.subtract(p0));

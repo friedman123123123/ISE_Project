@@ -39,6 +39,10 @@ public class SpotLight extends PointLight {
 	}
 	
 	/************** Operations ***************/
+	/**
+	 * @param Point3D
+	 * @return Color
+	 */
 	@Override
 	public Color getIntensity(Point3D p){
 		double l = _position.distance(p);
@@ -47,6 +51,10 @@ public class SpotLight extends PointLight {
 		return new Color(getIntensity().scale(a).reduce(d));
 	}
 
+	/**
+	 * @param Point3D
+	 * @return Vector
+	 */
 	@Override
 	public Vector getD(Point3D p) {
 		return _direction;

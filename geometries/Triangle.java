@@ -62,6 +62,10 @@ public class Triangle extends Plane {
 
 	/************** Operations ***************/
 
+	/**
+	 * @param Ray
+	 * @return Map<Geometry, List<Point3D>>
+	 */
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r) {
 		findIntersections = new HashMap<Geometry, List<Point3D>>();

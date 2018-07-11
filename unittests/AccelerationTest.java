@@ -37,26 +37,26 @@ public class AccelerationTest {
 
 		Material material = new Material(0.9, 0.8, 100, 0, 0);
 		int z = 200;
-		/*for (int i = 1000; i >= 0; i -= 100) {
+		/*for (int i = 1000; i >= 0; i -= 50) {
 			int k = 150;
-			for (int j = 1000; j >= 0; j -= 100) {
+			for (int j = 1000; j >= 0; j -= 50) {
 				Color color = new Color(i / 4, j / 4, k);
-				Triangle t1 = new Triangle(new Point3D(i - 500, j - 500, z), new Point3D(i - 600, j - 500, z),
-						new Point3D(i - 500, j - 600, z), color, material);
-				Triangle t2 = new Triangle(new Point3D(i - 600, j - 600, z), new Point3D(i - 600, j - 500, z),
-						new Point3D(i - 500, j - 600, z), color, material);
+				Triangle t1 = new Triangle(new Point3D(i - 500, j - 500, z), new Point3D(i - 550, j - 500, z),
+						new Point3D(i - 500, j - 550, z), color, material);
+				Triangle t2 = new Triangle(new Point3D(i - 550, j - 550, z), new Point3D(i - 550, j - 500, z),
+						new Point3D(i - 500, j - 550, z), color, material);
 				k -= 2;
 				geometries.add(t1);
 				geometries.add(t2);
 			}
 		}*/
 		
-		for (int i = 1000; i >= 0; i -= 20) {
+		for (int i = 1000; i >= 0; i -= 25) {
 			int k = 150;
-			for (int j = 1000; j >= 0; j -= 20) {
+			for (int j = 1000; j >= 0; j -= 25) {
 				Color color = new Color(i / 4, j / 4, k);
-				Rectangle rectangle = new Rectangle(new Point3D(i - 500, j - 500, z), new Point3D(i - 520, j - 500, z),
-						new Point3D(i - 500, j - 520, z), color, material);
+				Rectangle rectangle = new Rectangle(new Point3D(i - 500, j - 500, z), new Point3D(i - 525, j - 500, z),
+						new Point3D(i - 500, j - 525, z), color, material);
 				k -= 2;
 				geometries.add(rectangle);
 			}

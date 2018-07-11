@@ -64,34 +64,55 @@ public class Vector {
 	/************** Operations ***************/
 	// For every operation returns a new object to prevent any problems.
 
+	/**
+	 * @param Vector
+	 * @return Vector
+	 */
 	public Vector add(Vector v) {
 		return new Vector(_add(v));
 	}
 
+	/**
+	 * @param Vector
+	 * @return Vector
+	 */
 	public Vector subtract(Vector v) {
 		return new Vector(_subtract(v));
 	}
 
+	/**
+	 * @param double
+	 * @return Vector
+	 */
 	public Vector scale(double s) {
 		return new Vector(_scale(s));
 	}
 
+	/**
+	 * @param Vector
+	 * @return double
+	 */
 	public double dotProduct(Vector v) {
 		return _dotProduct(v);
 	}
 
+	/**
+	 * @param Vector
+	 * @return Vector
+	 */
 	public Vector crossProduct(Vector v) {
 		return new Vector(_crossProduct(v));
 	}
 
+	/**
+	 * @return double
+	 */
 	public double length() {
 		return _length();
 	}
 
 	/************** Helpers ***************/
 	/**
-	 * Calling Coordinate's add method to economize re-checking addition of
-	 * coordinations.
 	 * 
 	 * @param v
 	 * @return

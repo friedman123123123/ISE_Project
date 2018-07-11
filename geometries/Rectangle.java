@@ -93,15 +93,70 @@ public class Rectangle extends Plane {
 	}
 
 	/***************** Operations ********************/
+	/**
+	 * @param Point3D
+	 * @return Vector
+	 */
 	@Override
 	public Vector getNormal(Point3D p) {
 		return super.getNormal(p);
 	}
 
+	/**
+	 * @param Ray
+	 * @return Map<Geometry, List<Point3D>>
+	 */
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r) {
 		Map<Geometry, List<Point3D>> intersections = super.findIntersectionPoints(r);
 		for (int i = 0; i < intersections.size(); i++) {
+
+			Point3D p = intersections.get(this).get(i);
+			Vector v;
+			double x, y, z;
+			if (p.equals(this._p)) {
+				x = p.getX().get() - _p.getX().get();
+				y = p.getY().get() - _p.getY().get();
+				z = p.getZ().get() - _p.getZ().get();
+
+				double d1 = x * _r1.get_direction().getHead().getX().get()
+						+ y * _r1.get_direction().getHead().getY().get()
+						+ z * _r1.get_direction().getHead().getZ().get();
+
+				if (d1 < 0 || d1 > _length1) {
+					intersections.clear();
+					return intersections;
+				}
+
+				double d2 = x * _r2.get_direction().getHead().getX().get()
+						+ y * _r2.get_direction().getHead().getY().get()
+						+ z * _r2.get_direction().getHead().getZ().get();
+
+				if (d2 < 0 || d2 > _length2) {
+					intersections.clear();
+					return intersections;
+				}
+			} else {
+				v = p.subtract(this._p);
+
+				double d1 = v.dotProduct(_r1.get_direction());
+
+				if (d1 < 0 || d1 > _length1) {
+					intersections.clear();
+					return intersections;
+				}
+
+				double d2 = v.dotProduct(_r2.get_direction());
+
+				if (d2 < 0 || d2 > _length2) {
+					intersections.clear();
+					return intersections;
+				}
+			}
+		}
+
+		return intersections;
+		/*for (int i = 0; i < intersections.size(); i++) {
 
 			Point3D p = intersections.get(this).get(i);
 			Vector v = p.subtract(this._p);
@@ -122,7 +177,7 @@ public class Rectangle extends Plane {
 
 		}
 
-		return intersections;
+		return intersections;*/
 	}
 	
 	/************** Helpers ***************/

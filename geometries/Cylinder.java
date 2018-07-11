@@ -40,8 +40,9 @@ public class Cylinder extends RadialGeometry {
 
 	/************** Operations ***************/
 	
-	/** Returns a ray since it's supposed to return a normal to the plain at a specific point (ray is a point and a direction - a vector).
-	 *  Gets the normal of the cylinder at a specific point.
+	/** 
+	 * @param Point3D
+	 * @return Vector
 	 */
 	@Override
 	public Vector getNormal(Point3D p) {
@@ -66,6 +67,10 @@ public class Cylinder extends RadialGeometry {
 		return new Vector(p2.subtract(p));
 	}
 
+	/** 
+	 * @param Ray
+	 * @return Map<Geometry, List<Point3D>>
+	 */
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r){
 		pointsIntersections = new ArrayList<Point3D>();

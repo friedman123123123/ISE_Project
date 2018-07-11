@@ -92,6 +92,9 @@ public class Scene {
 	/*************** Admin *****************/
 	/************** Operations **************/
 
+	/**
+	 * @param Geometry
+	 */
 	public void addGeometry(Geometry g){
 		_geometries.add(g);
 	}

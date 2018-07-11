@@ -10,13 +10,6 @@ public class Point3D extends Point2D {
 
 	final static Point3D ZERO = new Point3D(0, 0, 0);
 
-	/**
-	 * @param x
-	 *            - Coordinate value for x
-	 * @param y
-	 * @param z
-	 */
-
 	/********** Constructors ***********/
 	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
 		super(x, y);
@@ -40,6 +33,14 @@ public class Point3D extends Point2D {
 
 	/*************** Admin *****************/
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((_z == null) ? 0 : _z.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -50,7 +51,7 @@ public class Point3D extends Point2D {
 		Point3D oth = (Point3D) obj;
 		return super.equals(oth) && _z.equals(oth._z);
 	}
-
+	
 	@Override
 	public String toString() {
 		return "(" + getX() + "," + getY() + "," + _z + ")";
@@ -59,18 +60,34 @@ public class Point3D extends Point2D {
 	/************** Operations ***************/
 	// For every operation returns a new object to prevent any problems.
 
+	/**
+	 * @param Point3D
+	 * @return Vector
+	 */
 	public Vector subtract(Point3D p) {
 		return new Vector(_subtract(p));
 	}
 
+	/**
+	 * @param Vector
+	 * @return Point3D
+	 */
 	public Point3D add(Vector v) {
 		return new Point3D(_add(v));
 	}
 
+	/**Distance between two points
+	 * @param Point3D
+	 * @return double
+	 */
 	public double distance(Point3D p) {
 		return _distance(p);
 	}
 
+	/**Sqrt distance between two points
+	 * @param Point3D
+	 * @return double
+	 */
 	public double distanceSqrt(Point3D p) {
 		double x = (p._x.subtract(_x)).get() * (p._x.subtract(_x)).get();
 		double y = (p._y.subtract(_y)).get() * (p._y.subtract(_y)).get();

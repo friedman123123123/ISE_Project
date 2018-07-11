@@ -19,7 +19,7 @@ public class ImageWriter {
 	
 	private String _imageName;
 	
-	// ***************** Constructors ********************** // 
+	/***************** Constructors **********************/ 
 	public ImageWriter(String imageName, int width, int height, int Nx, int Ny) {
 		_imageName = imageName;
 		_imageWidth = width;
@@ -36,7 +36,7 @@ public class ImageWriter {
 				imageWriter._Nx, imageWriter._Ny);
 	}
 	
-	// ***************** Getters/Setters ********************** //
+	/***************** Getters/Setters **********************/
 	
 	public int getWidth()  { return _imageWidth;  }
 	public int getHeight() { return _imageHeight; }
@@ -47,8 +47,11 @@ public class ImageWriter {
 	public void setNy(int _Ny) { this._Ny = _Ny; }
 	public void setNx(int _Nx) { this._Nx = _Nx; }
 		
-	// ***************** Operations ******************** // 
+	/***************** Operations ********************/ 
 	
+	/**
+	 * store the image as a jpg
+	 */
 	public void writeToimage(){
 		File ouFile = new File(PROJECT_PATH + "/" + _imageName + ".jpg");
 		try {
@@ -64,16 +67,33 @@ public class ImageWriter {
 		}
 	}
 	
+	/**
+	 * @param int
+	 * @param int
+	 * @param int
+	 * @param int
+	 * @param int
+	 */
 	public void writePixel(int xIndex, int yIndex, int r, int g, int b){
 		int rgb = new Color(r, g, b).getRGB();
 		_image.setRGB(xIndex, yIndex, rgb);
 	}
 	
+	/**
+	 * @param int
+	 * @param int
+	 * @param int[]
+	 */
 	public void writePixel(int xIndex, int yIndex, int[] rgbArray){
 		int rgb = new Color(rgbArray[0], rgbArray[1], rgbArray[2]).getRGB();
 		_image.setRGB(xIndex, yIndex, rgb);
 	}
 	
+	/**
+	 * @param int
+	 * @param int
+	 * @param Color
+	 */
 	public void writePixel(int xIndex, int yIndex, Color color){
 		_image.setRGB(xIndex, yIndex, color.getRGB());
 	}

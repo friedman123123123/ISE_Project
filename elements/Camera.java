@@ -55,12 +55,32 @@ public class Camera {
 	
 	/************** Operations ***************/
 	
+	/**
+	 * @param int
+	 * @param int
+	 * @param int
+	 * @param int
+	 * @param double
+	 * @param double
+	 * @param double
+	 * @return Ray
+	 */
 	public Ray constructRayThroughPixel(int Nx, int Ny, int i, int j, double screenDistance, double	screenWidth, double	screenHeight)
 	{
 		Point3D p = advanceRayToViewPlane(Nx, Ny, i, j, screenDistance, screenWidth, screenHeight);
 		return new Ray(_p0, p.subtract(_p0)); 
 	}
 	
+	/**
+	 * @param int
+	 * @param int
+	 * @param int
+	 * @param int
+	 * @param double
+	 * @param double
+	 * @param double
+	 * @return Point3D
+	 */
 	public Point3D advanceRayToViewPlane(int Nx, int Ny, int i, int j, double screenDistance, double screenWidth, double screenHeight) {
 		Point3D pC = _p0.add(get_vTo().scale(screenDistance));
 		double Rx = screenWidth / Nx;

@@ -27,6 +27,17 @@ public class Coordinate {
 
 	/*************** Admin *****************/
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(_coord);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	
+	
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -52,18 +63,34 @@ public class Coordinate {
 	/************** Operations ***************/
 	// For every operation returns a new object to prevent any problems.
 
+	/**
+	 * @param Coordinate
+	 * @return Coordinate
+	 */
 	public Coordinate subtract(Coordinate other) {
 		return new Coordinate(_subtract(other._coord));
 	}
 
+	/**
+	 * @param Coordinate
+	 * @return Coordinate
+	 */
 	public Coordinate add(Coordinate other) {
 		return new Coordinate(_add(other._coord));
 	}
 
+	/**
+	 * @param double
+	 * @return Coordinate
+	 */
 	public Coordinate scale(double num) {
 		return new Coordinate(_scale(num));
 	}
 
+	/**
+	 * @param Coordinate
+	 * @return Coordinate
+	 */
 	public Coordinate multiply(Coordinate other) {
 		return new Coordinate(_scale(other._coord));
 	}

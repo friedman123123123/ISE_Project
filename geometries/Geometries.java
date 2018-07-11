@@ -46,10 +46,16 @@ public class Geometries extends Geometry {
 	}
 	
 	/************** Operations ***************/
+	/**
+	 * @param Geometry
+	 */
 	public void add(Geometry g) {
 		geometriesList.add(g);
 	}
 
+	/**
+	 * @param Geometry
+	 */
 	public void remove(Geometry g) {
 		geometriesList.remove(g);
 	}
@@ -61,6 +67,10 @@ public class Geometries extends Geometry {
 	
 	
 	
+	/** 
+	 * @param Ray
+	 * @return Map<Geometry, List<Point3D>>
+	 */
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r) {
 		/*findIntersections = new HashMap<Geometry, List<Point3D>>();

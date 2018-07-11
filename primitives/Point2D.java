@@ -35,6 +35,15 @@ public class Point2D {
 
 	/*************** Admin *****************/
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((_x == null) ? 0 : _x.hashCode());
+		result = prime * result + ((_y == null) ? 0 : _y.hashCode());
+		return result;
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null) return false;
@@ -44,6 +53,7 @@ public class Point2D {
 		return _x.equals(oth._x) && _y.equals(oth._y);
 	}
 
+	
 	@Override
 	public String toString() {
 		return "(" + _x + "," + _y + ")";
