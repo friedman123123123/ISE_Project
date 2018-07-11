@@ -6,8 +6,11 @@ package renderer;
 import java.util.*;
 import java.util.Map.Entry;
 
+import javax.lang.model.type.IntersectionType;
+
 import org.junit.validator.PublicClassValidator;
 
+import renderer.Acceleration;
 import elements.Light;
 import elements.LightSource;
 import primitives.Vector;
@@ -25,16 +28,18 @@ import scene.Scene;
 public class Render {
 	private Scene _scene;
 	private ImageWriter _imageWriter;
-
+	private Acceleration _acceleration;
+	
 	private static class GeoPoint {
 		public Geometry geometry;
 		public Point3D point;
 	}
 
 	/***************** Constructors **********************/
-	public Render(ImageWriter image, Scene scene) {
+	public Render(ImageWriter image, Scene scene, Acceleration acceleration) {
 		_imageWriter = image;
 		_scene = scene;
+		_acceleration = acceleration;
 	}
 
 	/***************** Getters/Setters **********************/
@@ -96,6 +101,26 @@ public class Render {
 		}
 
 	}
+	
+	public void renderImage2() {
+		for (int i = 0; i < _imageWriter.getNx(); i++) {
+			for (int j = 0; j < _imageWriter.getNy(); j++) {
+				Ray ray = _scene.get_camera().constructRayThroughPixel(_imageWriter.getNx(), _imageWriter.getNy(), i, j,
+						_scene.get_distance(), _imageWriter.getWidth(), _imageWriter.getHeight());
+				Map<Geometry, Point3D> intersectionPoint = new HashMap<Geometry, Point3D>(_acceleration.intersect(ray));
+				GeoPoint closestPoint = new GeoPoint();
+				if (intersectionPoint.values().isEmpty() || intersectionPoint == null || closestPoint == null)
+					_imageWriter.writePixel(i, j, _scene.get_background().getColor());
+				else {
+					closestPoint.geometry = (Geometry) intersectionPoint.keySet().toArray()[0];
+					closestPoint.point = (Point3D) intersectionPoint.values().toArray()[0];
+					_imageWriter.writePixel(i, j, calcColor(closestPoint, ray).getColor()); // calcColor(closestPpoint)
+				}
+			}
+			System.err.println(i + "/" + _imageWriter.getNx());
+		}
+
+	}
 
 	private Color calcColor(GeoPoint geopoint, Ray inRay) {
 		return calcColor(geopoint, inRay, 3, 1.0);
@@ -115,11 +140,9 @@ public class Render {
 			Color color = new Color(_scene.get_ambientLight().getIntensity());
 			color = new Color(color.add(geopoint.geometry.get_emission()));
 
-
 			Vector v = inRay.get_direction();
 
-			// Vector v =
-			// p.subtract(_scene.get_camera().get_p0()).normalize();//
+			// Vector v = p.subtract(_scene.get_camera().get_p0()).normalize();
 			// normalize
 			Vector n = geopoint.geometry.getNormal(geopoint.point);
 			int nShininess = geopoint.geometry.get_material().get_nShininess();

@@ -10,8 +10,8 @@ import primitives.Ray;
 import primitives.Vector;
 
 public class Plane extends Geometry {
-	private Point3D _p; // A point in the plain.
-	private Vector _normal; // The normal vector to the plain.
+	protected Point3D _p; // A point in the plain.
+	protected Vector _normal; // The normal vector to the plain.
 
 	/********** Constructors ***********/
 	public Plane(Point3D p, Vector normal, Color emission, Material material) {

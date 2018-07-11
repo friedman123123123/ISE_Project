@@ -8,6 +8,7 @@ import primitives.Material;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+import sun.misc.CEFormatException;
 
 public class Sphere extends RadialGeometry {
 	private Point3D _center;
@@ -19,6 +20,7 @@ public class Sphere extends RadialGeometry {
 		_center = new Point3D(center);
 		_emission = new Color(emission);
 		_material = new Material(material);
+		boundingBox();
 	}
 
 	// Copy constructor
@@ -29,6 +31,7 @@ public class Sphere extends RadialGeometry {
 		_center = new Point3D(other._center);
 		_emission = new Color(other._emission);
 		_material = new Material(other._material);
+		boundingBox();
 	}
 	
 	/************** Getters/Setters *******/
@@ -53,6 +56,7 @@ public class Sphere extends RadialGeometry {
 		return new Vector(v); // Returns the normalized vector from the given point.
 	}
 	
+	
 	@Override
 	public Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r){
 		findIntersections = new HashMap<Geometry, List<Point3D>>();
@@ -62,9 +66,9 @@ public class Sphere extends RadialGeometry {
 		Vector v = new Vector(r.get_direction());
 		double tm = v.dotProduct(u);
 		double d = Math.sqrt(u.dotProduct(u) - tm * tm);
-		if (d > get_radius())
+		if (d > _radius)
 			return findIntersections;
-		double th = Math.sqrt(get_radius() * get_radius() - d * d);
+		double th = Math.sqrt(_radius * _radius - d * d);
 		if (Coordinate.ZERO.equals(th)) {
 			Point3D p = p0.add(v.scale(tm));
 			pointsIntersections.add(p);
@@ -85,5 +89,15 @@ public class Sphere extends RadialGeometry {
 		}
 		findIntersections.put(this, pointsIntersections);
 		return findIntersections;
+	}
+	
+	/************** Helpers ***************/
+	public void boundingBox() {
+		_xMin = _center.getX().get() - _radius;
+		_xMax = _center.getX().get() + _radius;
+		_yMin = _center.getY().get() - _radius;
+		_yMax = _center.getY().get() + _radius;
+		_zMin = _center.getZ().get() - _radius;
+		_zMax = _center.getZ().get() + _radius;
 	}
 }

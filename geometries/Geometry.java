@@ -15,6 +15,12 @@ import primitives.Vector;
 public abstract class Geometry {
 	protected Color _emission;//represents the color of a geometry
 	protected Material _material;
+	protected double _xMin;
+	protected double _yMin;
+	protected double _zMin;
+	protected double _xMax;
+	protected double _yMax;
+	protected double _zMax;
 	
 	protected ArrayList<Point3D> pointsIntersections;
 	protected Map<Geometry, List<Point3D>> findIntersections;
@@ -40,6 +46,31 @@ public abstract class Geometry {
 	public Material get_material() {
 		return _material;
 	}
+	
+	public double get_xMin() {
+		return _xMin;
+	}
+
+	public double get_yMin() {
+		return _yMin;
+	}
+
+	public double get_zMin() {
+		return _zMin;
+	}
+
+	public double get_xMax() {
+		return _xMax;
+	}
+
+	public double get_yMax() {
+		return _yMax;
+	}
+
+	public double get_zMax() {
+		return _zMax;
+	}
+
 	/************** Operations ***************/
 	// Abstract function that gets a point on a body and returns the normal
 	// vector to the body at that point.
@@ -56,5 +87,9 @@ public abstract class Geometry {
 	 */
 	public abstract Vector getNormal(Point3D p);
 
+	/**
+	 * @param Ray
+	 * @return Map<Geometry, List<Point3D>>
+	 */
 	public abstract Map<Geometry, List<Point3D>> findIntersectionPoints(Ray r);
 }
