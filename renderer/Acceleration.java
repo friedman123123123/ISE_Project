@@ -159,15 +159,17 @@ public class Acceleration {
 						// since the class Geometries has already an
 						// implementation of a list of geometries, we can just
 						// use this form
-						Geometries cell = new Geometries();
 
 						// the key of the map will be the index - the cell in
 						// which the geometry is stored
 						Point3D p = new Point3D(x, y, z);
 						if (grid.containsKey(p))
-							cell = grid.get(p);
-						cell.add(geometry);
-						grid.put(p, cell);
+							grid.get(p).add(geometry);
+						else {
+							Geometries cell = new Geometries();
+							cell.add(geometry);
+							grid.put(p, cell);
+						}
 					}
 		}
 	}

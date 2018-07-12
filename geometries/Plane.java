@@ -71,8 +71,12 @@ public class Plane extends Geometry {
 		pointsIntersections = new ArrayList<Point3D>();
 		Point3D p0 = new Point3D(r.get_p00());
 		Point3D q0 = new Point3D(_p);
+		
+		// if the ray intersects the same point of the plane
 		if(p0.equals(q0)) {
-			return findIntersections;
+			double z = (-(_normal.getHead().getX().get() + _normal.getHead().getY().get())) / _normal.getHead().getZ().get();
+			Vector v2 = new Vector(1, 1, z);
+			p0 = p0.add(v2);
 		}
 		
 		Vector n = new Vector(_normal);

@@ -36,27 +36,29 @@ public class AccelerationTest {
 		Geometries geometries = new Geometries();
 
 		Material material = new Material(0.9, 0.8, 100, 0, 0);
-		int z = 200;
-		/*for (int i = 1000; i >= 0; i -= 50) {
+		int z = 200; // for rectangles
+		/*int z2 = 500; // for triangles
+		for (int i = 1000; i >= 0; i -= 100) {
 			int k = 150;
-			for (int j = 1000; j >= 0; j -= 50) {
+			for (int j = 1000; j >= 0; j -= 100) {
 				Color color = new Color(i / 4, j / 4, k);
-				Triangle t1 = new Triangle(new Point3D(i - 500, j - 500, z), new Point3D(i - 550, j - 500, z),
-						new Point3D(i - 500, j - 550, z), color, material);
-				Triangle t2 = new Triangle(new Point3D(i - 550, j - 550, z), new Point3D(i - 550, j - 500, z),
-						new Point3D(i - 500, j - 550, z), color, material);
+				Triangle t1 = new Triangle(new Point3D(i - 500, j - 500, z2), new Point3D(i - 600, j - 500, z2),
+						new Point3D(i - 500, j - 600, z2), color, material);
+				Triangle t2 = new Triangle(new Point3D(i - 600, j - 600, z2), new Point3D(i - 600, j - 500, z2),
+						new Point3D(i - 500, j - 600, z2), color, material);
 				k -= 2;
 				geometries.add(t1);
 				geometries.add(t2);
+				geometries.add(rectangle);
 			}
 		}*/
 		
-		for (int i = 1000; i >= 0; i -= 25) {
+		for (int i = 1000; i >= 0; i -= 100) {
 			int k = 150;
-			for (int j = 1000; j >= 0; j -= 25) {
+			for (int j = 1000; j >= 0; j -= 100) {
 				Color color = new Color(i / 4, j / 4, k);
-				Rectangle rectangle = new Rectangle(new Point3D(i - 500, j - 500, z), new Point3D(i - 525, j - 500, z),
-						new Point3D(i - 500, j - 525, z), color, material);
+				Rectangle rectangle = new Rectangle(new Point3D(i - 500, j - 500, z), new Point3D(i - 600, j - 500, z),
+						new Point3D(i - 500, j - 600, z), color, material);
 				k -= 2;
 				geometries.add(rectangle);
 			}
@@ -72,7 +74,7 @@ public class AccelerationTest {
 		ImageWriter imageWriter = new ImageWriter("acceleration test", 500, 500, 500, 500);
 		Render testRender = new Render(imageWriter, scene, acceleration);
 
-		testRender.renderImage();
+		testRender.renderImage2();
 		testRender.printImage();
 	}
 }

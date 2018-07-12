@@ -26,6 +26,7 @@ import scene.Scene;
  *
  */
 public class Render {
+	private static int MAX_RECURSION_LEVEL=3;
 	private Scene _scene;
 	private ImageWriter _imageWriter;
 	private Acceleration _acceleration;
@@ -134,7 +135,7 @@ public class Render {
 	 * @return Color
 	 */
 	private Color calcColor(GeoPoint geopoint, Ray inRay) {
-		return calcColor(geopoint, inRay, 3, 1.0);
+		return calcColor(geopoint, inRay, MAX_RECURSION_LEVEL, 1.0);
 	}
 
 	/**
@@ -317,7 +318,7 @@ public class Render {
 
 		double shadowK = 1;
 		for (Map.Entry<Geometry, List<Point3D>> entry : intersectionPoints.entrySet())
-			shadowK *= entry.getKey().get_material().get_Kt();
+			shadowK *= entry.getKey().get_material().get_Kt()*entry.getValue().size();
 		return shadowK;
 	}
 }
